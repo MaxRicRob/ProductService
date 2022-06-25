@@ -1,0 +1,21 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/product_db
+    username: user
+    password: pw
+
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+

@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  mysqlDb:
+    image: mysql:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pw
+      - MYSQL_DATABASE=product_db
+      - MYSQL_ROOT_PASSWORD=pw
+    volumes:
+      - "./conf.d:/etc/mysql/conf.d:ro"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+  app:
+    depends_on:
+      mysqlDb:
+        condition: service_healthy
+    container_name: ProductServiceApplication
+    restart: on-failure
+    command: java -jar target/ProductServiceApplication-0.0.1-SNAPSHOT.jar
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    ports:
+      - 8082:8082
+    expose:
+      - 8082
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDb:3306/product_db?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pw
+    volumes:
+      - ./:/app/app
