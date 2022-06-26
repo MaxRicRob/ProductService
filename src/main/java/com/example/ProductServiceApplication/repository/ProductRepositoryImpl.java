@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -43,8 +44,8 @@ public class ProductRepositoryImpl implements ProductRepository{
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        productEntityJpaRepository.delete(ProductEntity.from(product));
+    public void deleteProduct(UUID uuid) {
+        productEntityJpaRepository.deleteById(uuid);
     }
 
     private void updateProductEntity(ProductEntity productEntityToUpdate, ProductEntity updatedProductEntity) {

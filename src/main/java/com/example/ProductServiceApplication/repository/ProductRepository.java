@@ -3,6 +3,7 @@ package com.example.ProductServiceApplication.repository;
 import com.example.ProductServiceApplication.domain.Product;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProductRepository {
 
@@ -12,6 +13,6 @@ public interface ProductRepository {
 
     void updateProduct(Product product);
 
-    void deleteProduct(Product product);
+    void deleteProduct(UUID uuid);
 }
 

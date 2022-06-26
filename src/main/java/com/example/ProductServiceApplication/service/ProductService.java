@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +58,7 @@ public class ProductService {
         productRepository.updateProduct(product);
     }
 
-    public void deleteProduct(Product product) {
-        productRepository.deleteProduct(product);
+    public void deleteProduct(UUID uuid) {
+        productRepository.deleteProduct(uuid);
     }
 }
