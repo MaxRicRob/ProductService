@@ -29,9 +29,9 @@ public class ProductEntity {
     @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
     @GeneratedValue
     private UUID id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String userName;
     @Column
     @ManyToMany

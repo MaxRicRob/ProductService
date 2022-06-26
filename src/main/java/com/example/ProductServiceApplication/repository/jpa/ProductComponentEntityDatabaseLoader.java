@@ -24,10 +24,11 @@ public class ProductComponentEntityDatabaseLoader {
         return args -> {
 
             log.info("initiating ProductComponentEntityDatabaseLoader");
-            Flux<ProductComponent> productComponentFlux = webClient.get()
-                            .uri("components")
-                                    .retrieve()
-                                            .bodyToFlux(ProductComponent.class);
+            Flux<ProductComponent> productComponentFlux = webClient
+                    .get()
+                    .uri("components")
+                    .retrieve()
+                    .bodyToFlux(ProductComponent.class);
             productComponentFlux.subscribe();
             List<ProductComponentEntity> productComponents =
                     productComponentFlux.toStream()

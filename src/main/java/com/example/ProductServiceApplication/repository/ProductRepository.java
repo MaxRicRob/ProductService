@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface ProductRepository {
 
-    List<Product> findByUserName(String userName);
+    List<Product> findProductByUserName(String userName);
 
     void insertProduct(Product product);
 
-    Product updateProduct(Product product);
+    void updateProduct(Product product);
+
+    void deleteProduct(Product product);
 }
 
