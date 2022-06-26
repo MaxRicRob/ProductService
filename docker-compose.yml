@@ -3,8 +3,10 @@ services:
   mysqlDb:
     image: mysql:latest
     restart: always
+    cap_add:
+      - SYS_NICE
     ports:
-      - 3306:3306
+      - 3307:3306
     environment:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=pw
