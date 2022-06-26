@@ -2,7 +2,7 @@ package com.example.ProductServiceApplication.repository;
 
 import com.example.ProductServiceApplication.domain.Product;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntity;
-import com.example.ProductServiceApplication.repository.jpa.ProductJpaRepository;
+import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository{
 
-    private final ProductJpaRepository productJpaRepository;
+    private final ProductEntityJpaRepository productEntityJpaRepository;
 
     @Override
     public List<Product> findByUserName(String userName) {
-        return productJpaRepository.findAll().stream()
+        return productEntityJpaRepository.findAll().stream()
                 .filter(productEntity -> productEntity.getName().equals(userName))
                 .map(Product::from)
                 .collect(Collectors.toList());
@@ -26,7 +26,7 @@ public class ProductRepositoryImpl implements ProductRepository{
     @Override
     public void insertProduct(Product product) {
 
-        productJpaRepository.save(ProductEntity.from(product));
+        productEntityJpaRepository.save(ProductEntity.from(product));
     }
 
     @Override
