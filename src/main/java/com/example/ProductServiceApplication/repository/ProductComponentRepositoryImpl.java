@@ -1,8 +1,7 @@
 package com.example.ProductServiceApplication.repository;
 
 import com.example.ProductServiceApplication.domain.ProductComponent;
-import com.example.ProductServiceApplication.repository.jpa.ProductComponentEntity;
-import com.example.ProductServiceApplication.repository.jpa.ProductComponentJpaRepository;
+import com.example.ProductServiceApplication.repository.jpa.ProductComponentEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,17 +12,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductComponentRepositoryImpl implements ProductComponentRepository {
 
-    private final ProductComponentJpaRepository productComponentJpaRepository;
+    private final ProductComponentEntityJpaRepository productComponentEntityJpaRepository;
 
     @Override
     public List<ProductComponent> findAll() {
-        return productComponentJpaRepository.findAll().stream()
+        return productComponentEntityJpaRepository.findAll().stream()
                 .map(ProductComponent::from)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void insert(ProductComponent productComponent) {
-        productComponentJpaRepository.save(ProductComponentEntity.from(productComponent));
     }
 }
