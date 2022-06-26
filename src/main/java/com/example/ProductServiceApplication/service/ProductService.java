@@ -36,7 +36,9 @@ public class ProductService {
                 .bodyToFlux(DefaultProduct.class);
         defaultProductFlux.subscribe();
 
-        return defaultProductFlux.toStream().collect(Collectors.toList());
+        return defaultProductFlux
+            .toStream()
+            .collect(Collectors.toList());
     }
 
     public List<ProductResponse> getAllProductsFromUser(String userName) {
