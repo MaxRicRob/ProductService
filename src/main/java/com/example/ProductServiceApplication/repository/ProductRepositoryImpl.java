@@ -36,24 +36,19 @@ public class ProductRepositoryImpl implements ProductRepository{
     @Override
     public void updateProduct(Product product) {
 
-        productEntityJpaRepository
-                .findById(product.getId())
-                .ifPresentOrElse(p -> updateProductEntity(p,ProductEntity.from(product)),
-                        () -> log.info("product not found")
-                );
+        ProductEntity updatedProduct = ProductEntity.from(product);
+
+        productEntityJpaRepository.findById(product.getId())
+                        .map(productToUpdate -> {
+                            productToUpdate.setProductComponentsEntities(updatedProduct.getProductComponentsEntities());
+                            productToUpdate.setName(updatedProduct.getName());
+                            productToUpdate.setUserName(updatedProduct.getUserName());
+                            return this.productEntityJpaRepository.save(productToUpdate);
+                        });
     }
 
     @Override
     public void deleteProduct(UUID uuid) {
         productEntityJpaRepository.deleteById(uuid);
-    }
-
-    private void updateProductEntity(ProductEntity productEntityToUpdate, ProductEntity updatedProductEntity) {
-
-        productEntityToUpdate
-                .setProductComponentsEntities(updatedProductEntity.getProductComponentsEntities())
-                .setName(updatedProductEntity.getName())
-                .setUserName(updatedProductEntity.getUserName());
-        productEntityJpaRepository.save(productEntityToUpdate);
     }
 }
