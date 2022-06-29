@@ -48,14 +48,14 @@ public class ProductComponentEntityDatabaseLoader {
 
     private List<ProductComponentEntity> removeDuplicates(ProductComponentEntityJpaRepository repository, List<ProductComponentEntity> productComponents) {
 
-        List<Integer> idsOfPresentProductComponentEntities = getIdsOfPresentProductComponentEntities(repository);
+        List<Integer> idsOfPresentEntitiesInWarehouse = getIdsOfPresentEntitiesInWarehouse(repository);
 
         return productComponents.stream()
-               .filter(p -> !idsOfPresentProductComponentEntities.contains(p.getId()))
+               .filter(p -> !idsOfPresentEntitiesInWarehouse.contains(p.getId()))
                .collect(Collectors.toList());
     }
 
-    private List<Integer> getIdsOfPresentProductComponentEntities(ProductComponentEntityJpaRepository repository) {
+    private List<Integer> getIdsOfPresentEntitiesInWarehouse(ProductComponentEntityJpaRepository repository) {
         return repository
                 .findAll()
                 .stream()
