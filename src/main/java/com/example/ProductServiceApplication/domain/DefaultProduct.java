@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Accessors(chain = true)
 public class DefaultProduct {
 
-    private UUID id;
+    private int id;
     private String name;
     private List<ProductComponent> productComponents;
 
