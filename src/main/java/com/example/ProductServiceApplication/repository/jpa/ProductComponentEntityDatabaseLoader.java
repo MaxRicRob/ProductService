@@ -22,7 +22,6 @@ public class ProductComponentEntityDatabaseLoader {
     @Bean
     CommandLineRunner initDatabase(ProductComponentEntityJpaRepository repository) {
         return args -> {
-
             log.info("initiating ProductComponentEntityDatabaseLoader");
             List<ProductComponentEntity> productComponents = getProductComponentEntitiesFromWarehouse();
             List<ProductComponentEntity> productComponentsWithoutDuplicates = removeDuplicates(repository, productComponents);
