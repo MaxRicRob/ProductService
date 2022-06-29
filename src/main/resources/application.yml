@@ -19,3 +19,13 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
 
+#rabbitMQ
+queue-names:
+  components: components.rpc.queue
+
+routing-keys:
+  product-service: product.service
+
+xchange:
+  name: exchange.rpc
+
