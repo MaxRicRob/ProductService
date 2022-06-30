@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Repository
@@ -40,7 +39,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 
         productEntityJpaRepository.findById(product.getId())
                         .map(productToUpdate -> {
-                            productToUpdate.setProductComponentsEntities(updatedProduct.getProductComponentsEntities());
+                            productToUpdate.setComponents(updatedProduct.getComponents());
                             productToUpdate.setName(updatedProduct.getName());
                             productToUpdate.setUserName(updatedProduct.getUserName());
                             return this.productEntityJpaRepository.save(productToUpdate);

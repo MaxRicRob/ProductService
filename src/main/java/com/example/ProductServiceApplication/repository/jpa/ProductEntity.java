@@ -36,18 +36,18 @@ public class ProductEntity {
     @Column
     @ManyToMany
     @JoinTable
-    private List<ProductComponentEntity> productComponentsEntities;
+    private List<ProductComponentEntity> components;
 
     public static ProductEntity from(Product product) {
         return new ProductEntity()
                 .setId(product.getId())
                 .setName(product.getName())
                 .setUserName(product.getUserName())
-                .setProductComponentsEntities(getProductComponentEntities(product));
+                .setComponents(getProductComponentEntities(product));
     }
 
     private static List<ProductComponentEntity> getProductComponentEntities(Product product) {
-        return product.getProductComponents().stream()
+        return product.getComponents().stream()
                 .map(ProductComponentEntity::from)
                 .collect(Collectors.toList());
     }

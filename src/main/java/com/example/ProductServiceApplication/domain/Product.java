@@ -21,18 +21,18 @@ public class Product {
     private UUID id;
     private String name;
     private String userName;
-    private List<ProductComponent> productComponents;
+    private List<ProductComponent> components;
 
     public static Product from(ProductEntity productEntity) {
         return new Product()
                 .setId(productEntity.getId())
                 .setName(productEntity.getName())
                 .setUserName(productEntity.getUserName())
-                .setProductComponents(getProductComponents(productEntity));
+                .setComponents(getComponents(productEntity));
     }
 
-    private static List<ProductComponent> getProductComponents(ProductEntity productEntity) {
-        return productEntity.getProductComponentsEntities().stream()
+    private static List<ProductComponent> getComponents(ProductEntity productEntity) {
+        return productEntity.getComponents().stream()
                 .map(ProductComponent::from)
                 .collect(Collectors.toList());
     }
