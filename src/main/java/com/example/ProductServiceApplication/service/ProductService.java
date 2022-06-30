@@ -6,11 +6,16 @@ import com.example.ProductServiceApplication.domain.Product;
 import com.example.ProductServiceApplication.domain.ProductComponent;
 import com.example.ProductServiceApplication.repository.ProductComponentRepository;
 import com.example.ProductServiceApplication.repository.ProductRepository;
+import com.example.ProductServiceApplication.repository.jpa.ProductComponentEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -30,7 +35,7 @@ public class ProductService {
 
     public List<DefaultProduct> getAllDefaultProducts() {
 
-        var defaultProductFlux = webClient
+        Flux<DefaultProduct> defaultProductFlux = webClient
                 .get()
                 .uri("defaultProducts")
                 .retrieve()
@@ -41,6 +46,8 @@ public class ProductService {
             .toStream()
             .collect(Collectors.toList());
     }
+
+
 
     public List<ProductResponse> getAllProductsFromUser(String userName) {
         return productRepository

@@ -17,6 +17,13 @@ public class RabbitController {
         return new Gson().toJson(productService.getAllProductComponents());
     }
 
+    @RabbitListener(queues = "${queue-names.default-products}")
+    public String getAllDefaultProducts() {
+
+
+        return new Gson().toJson(productService.getAllDefaultProducts());
+    }
+
 
 
 
