@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfiguration {
 
     @Value("${xchange.name}")
-    private String DIRECT_XCHANGE_NAME;
+    private String directXchangeName;
 
-    @Value("${routing-keys.product-service}")
-    private String routingKeyProductService;
+    @Value("${routing-keys.components}")
+    private String componentsRoutingKey;
 
     @Value("${queue-names.components}")
     private String componentsQueueName;
@@ -26,7 +26,7 @@ public class RabbitConfiguration {
 
     @Bean
     public DirectExchange directExchange() {
-        return new DirectExchange(DIRECT_XCHANGE_NAME);
+        return new DirectExchange(directXchangeName);
     }
 
     @Bean
@@ -36,7 +36,7 @@ public class RabbitConfiguration {
 
     @Bean
     public Binding componentsBinding(DirectExchange directExchange, Queue componentsQueue) {
-        return BindingBuilder.bind(componentsQueue).to(directExchange).with(routingKeyProductService);
+        return BindingBuilder.bind(componentsQueue).to(directExchange).with(componentsRoutingKey);
     }
 
     @Bean
