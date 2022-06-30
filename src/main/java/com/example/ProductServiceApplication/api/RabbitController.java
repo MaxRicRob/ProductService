@@ -1,11 +1,9 @@
 package com.example.ProductServiceApplication.api;
 
-import com.example.ProductServiceApplication.domain.ProductComponent;
 import com.example.ProductServiceApplication.service.ProductService;
-import lombok.RequiredArgsConstructor;
+import com.google.gson.Gson;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,10 +13,12 @@ public class RabbitController {
     private ProductService productService;
 
     @RabbitListener(queues = "${queue-names.components}")
-    public List<ProductComponent> getAllProductComponents() {
-        return productService.getAllProductComponents();
-
+    public String getAllProductComponents() {
+        return new Gson().toJson(productService.getAllProductComponents());
     }
+
+
+
 
 
 }

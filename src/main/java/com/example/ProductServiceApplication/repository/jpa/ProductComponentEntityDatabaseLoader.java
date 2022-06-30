@@ -32,7 +32,7 @@ public class ProductComponentEntityDatabaseLoader {
 
     private List<ProductComponentEntity> getProductComponentEntitiesFromWarehouse() {
 
-        Flux<ProductComponent> productComponentFlux = webClient
+        var productComponentFlux = webClient
                 .get()
                 .uri("components")
                 .retrieve()
@@ -47,7 +47,7 @@ public class ProductComponentEntityDatabaseLoader {
 
     private List<ProductComponentEntity> removeDuplicates(ProductComponentEntityJpaRepository repository, List<ProductComponentEntity> productComponents) {
 
-        List<Integer> idsOfPresentEntitiesInWarehouse = getIdsOfPresentEntitiesInWarehouse(repository);
+        var idsOfPresentEntitiesInWarehouse = getIdsOfPresentEntitiesInWarehouse(repository);
 
         return productComponents.stream()
                .filter(p -> !idsOfPresentEntitiesInWarehouse.contains(p.getId()))

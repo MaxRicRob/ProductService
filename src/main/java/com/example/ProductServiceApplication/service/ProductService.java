@@ -30,7 +30,7 @@ public class ProductService {
 
     public List<DefaultProduct> getAllDefaultProducts() {
 
-        Flux<DefaultProduct> defaultProductFlux = webClient
+        var defaultProductFlux = webClient
                 .get()
                 .uri("defaultProducts")
                 .retrieve()

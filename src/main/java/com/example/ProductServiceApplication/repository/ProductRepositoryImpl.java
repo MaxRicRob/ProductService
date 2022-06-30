@@ -36,7 +36,7 @@ public class ProductRepositoryImpl implements ProductRepository{
     @Override
     public void updateProduct(Product product) {
 
-        ProductEntity updatedProduct = ProductEntity.from(product);
+        var updatedProduct = ProductEntity.from(product);
 
         productEntityJpaRepository.findById(product.getId())
                         .map(productToUpdate -> {

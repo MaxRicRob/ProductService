@@ -2,8 +2,6 @@ package com.example.ProductServiceApplication.configuration;
 
 
 import com.example.ProductServiceApplication.api.RabbitController;
-import com.example.ProductServiceApplication.repository.ProductComponentRepositoryImpl;
-import com.example.ProductServiceApplication.service.ProductService;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
