@@ -41,7 +41,7 @@ public class RabbitController {
             case "createProduct": {
                 var product = new Gson().fromJson(input[1], Product.class);
                 productService.createProduct(product);
-                return "created";
+                return new Gson().toJson(product);
             }
             case "updateProduct": {
                 var product = new Gson().fromJson(input[1], Product.class);
@@ -57,7 +57,7 @@ public class RabbitController {
     }
 
     private String[] parseMessage(Message message) {
-        return new String(message.getBody(), StandardCharsets.UTF_8).split("-");
+        return new String(message.getBody(), StandardCharsets.UTF_8).split("_");
     }
 
 

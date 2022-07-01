@@ -9,7 +9,6 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -27,7 +26,6 @@ public class ProductEntity {
 
     @Id()
     @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
-    @GeneratedValue
     private UUID id;
     @Column(nullable = false)
     private String name;

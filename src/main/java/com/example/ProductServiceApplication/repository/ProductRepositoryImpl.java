@@ -22,7 +22,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<Product> findProductByUserName(String userName) {
         return productEntityJpaRepository.findAll().stream()
-                .filter(productEntity -> productEntity.getName().equals(userName))
+                .filter(productEntity -> productEntity.getUserName().equals(userName))
                 .map(Product::from)
                 .collect(Collectors.toList());
     }
@@ -30,7 +30,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void createProduct(Product product) {
 
-        productEntityJpaRepository.save(ProductEntity.from(product));
+        if (productEntityJpaRepository.findById(product.getId()).isEmpty()) {
+            productEntityJpaRepository.save(ProductEntity.from(product));
+        } else {
+            log.warn("can't insert because its already inside");
+        }
     }
 
     @Override
