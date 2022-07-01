@@ -2,32 +2,45 @@ package com.example.ProductServiceApplication.api;
 
 import com.example.ProductServiceApplication.service.ProductService;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class RabbitController {
 
     @Autowired
     private ProductService productService;
 
-    @RabbitListener(queues = "${queue-names.components}")
-    public String getAllProductComponents() {
+    @RabbitListener(queues = "${queue-names.product-service}")
+    public String handleRequest(Message message) {
 
-        return new Gson().toJson(productService.getAllProductComponents());
+        var input = parseMessage(message);
+
+        switch (input[0]) {
+            case "getComponents": {
+                return new Gson().toJson(productService.getAllProductComponents());
+            }
+            case "getDefaultProducts": {
+                return new Gson().toJson(productService.getAllDefaultProducts());
+            }
+            case "getProductsFromUser": {
+                var userName = input[1];
+                return new Gson().toJson(productService.getAllProductsFromUser(userName));
+            }
+            default: {
+                log.info("invalid input message - unable to parse");
+                return "";
+
+            }
+        }
     }
 
-    @RabbitListener(queues = "${queue-names.default-products}")
-    public String getAllDefaultProducts() {
-
-        return new Gson().toJson(productService.getAllDefaultProducts());
-    }
-
-    @RabbitListener(queues = "${queue-names.user-products}")
-    public String getUserProducts(Message message) {
-        
-        return new Gson().toJson(productService.getAllProductsFromUser(message.toString()));
+    private String[] parseMessage(Message message) {
+        return new String(message.getBody(), StandardCharsets.UTF_8).split("-");
     }
 
 
