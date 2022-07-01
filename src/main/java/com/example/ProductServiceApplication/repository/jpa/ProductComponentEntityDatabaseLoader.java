@@ -50,8 +50,8 @@ public class ProductComponentEntityDatabaseLoader {
         var idsOfPresentEntitiesInWarehouse = getIdsOfPresentEntitiesInWarehouse(repository);
 
         return productComponents.stream()
-               .filter(p -> !idsOfPresentEntitiesInWarehouse.contains(p.getId()))
-               .collect(Collectors.toList());
+                .filter(p -> !idsOfPresentEntitiesInWarehouse.contains(p.getId()))
+                .collect(Collectors.toList());
     }
 
     private List<Integer> getIdsOfPresentEntitiesInWarehouse(ProductComponentEntityJpaRepository repository) {

@@ -43,12 +43,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         var updatedProduct = ProductEntity.from(product);
 
         productEntityJpaRepository.findById(product.getId())
-                        .map(productToUpdate -> {
-                            productToUpdate.setComponents(updatedProduct.getComponents());
-                            productToUpdate.setName(updatedProduct.getName());
-                            productToUpdate.setUserName(updatedProduct.getUserName());
-                            return this.productEntityJpaRepository.save(productToUpdate);
-                        });
+                .map(productToUpdate -> {
+                    productToUpdate.setComponents(updatedProduct.getComponents());
+                    productToUpdate.setName(updatedProduct.getName());
+                    productToUpdate.setUserName(updatedProduct.getUserName());
+                    return this.productEntityJpaRepository.save(productToUpdate);
+                });
     }
 
     @Override
