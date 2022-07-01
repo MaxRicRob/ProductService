@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 @Slf4j
 public class RabbitController {
@@ -30,6 +31,10 @@ public class RabbitController {
             case "getProductsFromUser": {
                 var userName = input[1];
                 return new Gson().toJson(productService.getAllProductsFromUser(userName));
+            }
+            case "deleteProduct": {
+                var uuid = UUID.fromString(input[1]);
+                productService.deleteProduct(uuid);
             }
             default: {
                 log.info("invalid input message - unable to parse");
