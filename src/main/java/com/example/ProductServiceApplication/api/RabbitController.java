@@ -43,6 +43,11 @@ public class RabbitController {
                 productService.createProduct(product);
                 return "created";
             }
+            case "updateProduct": {
+                var product = new Gson().fromJson(input[1], Product.class);
+                productService.updateProduct(product);
+                return "updated";
+            }
             default: {
                 log.info("invalid input message - unable to parse");
                 return "";
