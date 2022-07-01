@@ -9,7 +9,6 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -27,7 +26,6 @@ public class ProductEntity {
 
     @Id()
     @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
-    @GeneratedValue
     private UUID id;
     @Column(nullable = false)
     private String name;
@@ -36,18 +34,18 @@ public class ProductEntity {
     @Column
     @ManyToMany
     @JoinTable
-    private List<ProductComponentEntity> productComponentsEntities;
+    private List<ProductComponentEntity> components;
 
     public static ProductEntity from(Product product) {
         return new ProductEntity()
                 .setId(product.getId())
                 .setName(product.getName())
                 .setUserName(product.getUserName())
-                .setProductComponentsEntities(getProductComponentEntities(product));
+                .setComponents(getProductComponentEntities(product));
     }
 
     private static List<ProductComponentEntity> getProductComponentEntities(Product product) {
-        return product.getProductComponents().stream()
+        return product.getComponents().stream()
                 .map(ProductComponentEntity::from)
                 .collect(Collectors.toList());
     }

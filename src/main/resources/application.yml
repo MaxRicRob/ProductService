@@ -18,4 +18,21 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+
+
+
+#rabbitMQ
+queue-names:
+  product-service: product-service.rpc.queue
+
+routing-keys:
+  product-service: product-service.rpc.key
+
+xchange:
+  name: exchange.rpc
+
+
 

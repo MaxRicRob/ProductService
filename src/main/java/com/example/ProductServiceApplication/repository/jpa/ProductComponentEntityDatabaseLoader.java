@@ -20,38 +20,45 @@ public class ProductComponentEntityDatabaseLoader {
     private final WebClient webClient = WebClient.create("http://localhost:8081");
 
     @Bean
-    CommandLineRunner initDatabase(ProductComponentEntityJpaRepository productComponentEntityJpaRepository) {
+    CommandLineRunner initDatabase(ProductComponentEntityJpaRepository repository) {
         return args -> {
-
             log.info("initiating ProductComponentEntityDatabaseLoader");
-            Flux<ProductComponent> productComponentFlux = webClient
-                    .get()
-                    .uri("components")
-                    .retrieve()
-                    .bodyToFlux(ProductComponent.class);
-            productComponentFlux.subscribe();
-            List<ProductComponentEntity> productComponents =
-                    productComponentFlux.toStream()
-                            .map(ProductComponentEntity::from)
-                            .collect(Collectors.toList());
-            List<ProductComponentEntity> insertionList = removeDuplicates(productComponentEntityJpaRepository, productComponents);
-            productComponentEntityJpaRepository.saveAll(insertionList);
+            List<ProductComponentEntity> productComponents = getProductComponentEntitiesFromWarehouse();
+            List<ProductComponentEntity> productComponentsWithoutDuplicates = removeDuplicates(repository, productComponents);
+            repository.saveAll(productComponentsWithoutDuplicates);
             log.info("ProductComponentEntityDatabaseLoader initiated");
         };
     }
 
-    private List<ProductComponentEntity> removeDuplicates(
-            ProductComponentEntityJpaRepository productComponentEntityJpaRepository,
-            List<ProductComponentEntity> productComponents)
-    {
-        List<ProductComponentEntity> productComponentEntitiesInDb = productComponentEntityJpaRepository.findAll();
-        List<Integer> idsOfPresentProductComponentEntities =
-                productComponentEntitiesInDb.stream()
-                        .map(ProductComponentEntity::getId)
-                        .collect(Collectors.toList());
+    private List<ProductComponentEntity> getProductComponentEntitiesFromWarehouse() {
 
-       return productComponents.stream()
-               .filter(p -> !idsOfPresentProductComponentEntities.contains(p.getId()))
-               .collect(Collectors.toList());
+        var productComponentFlux = webClient
+                .get()
+                .uri("components")
+                .retrieve()
+                .bodyToFlux(ProductComponent.class);
+
+        productComponentFlux.subscribe();
+
+        return productComponentFlux.toStream()
+                .map(ProductComponentEntity::from)
+                .collect(Collectors.toList());
+    }
+
+    private List<ProductComponentEntity> removeDuplicates(ProductComponentEntityJpaRepository repository, List<ProductComponentEntity> productComponents) {
+
+        var idsOfPresentEntitiesInWarehouse = getIdsOfPresentEntitiesInWarehouse(repository);
+
+        return productComponents.stream()
+                .filter(p -> !idsOfPresentEntitiesInWarehouse.contains(p.getId()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getIdsOfPresentEntitiesInWarehouse(ProductComponentEntityJpaRepository repository) {
+        return repository
+                .findAll()
+                .stream()
+                .map(ProductComponentEntity::getId)
+                .collect(Collectors.toList());
     }
 }

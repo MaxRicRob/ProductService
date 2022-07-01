@@ -4,8 +4,9 @@ package com.example.ProductServiceApplication.service;
 import com.example.ProductServiceApplication.domain.DefaultProduct;
 import com.example.ProductServiceApplication.domain.Product;
 import com.example.ProductServiceApplication.domain.ProductComponent;
-import com.example.ProductServiceApplication.repository.ProductComponentRepository;
-import com.example.ProductServiceApplication.repository.ProductRepository;
+import com.example.ProductServiceApplication.domain.ProductComponentRepository;
+import com.example.ProductServiceApplication.domain.ProductRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -38,9 +39,10 @@ public class ProductService {
         defaultProductFlux.subscribe();
 
         return defaultProductFlux
-            .toStream()
-            .collect(Collectors.toList());
+                .toStream()
+                .collect(Collectors.toList());
     }
+
 
     public List<ProductResponse> getAllProductsFromUser(String userName) {
         return productRepository
@@ -50,8 +52,8 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public void addProduct(Product product) {
-        productRepository.insertProduct(product);
+    public void createProduct(Product product) {
+        productRepository.createProduct(product);
     }
 
     public void updateProduct(Product product) {

@@ -1,6 +1,7 @@
 package com.example.ProductServiceApplication.repository;
 
 import com.example.ProductServiceApplication.domain.Product;
+import com.example.ProductServiceApplication.domain.ProductRepository;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,46 +10,55 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class ProductRepositoryImpl implements ProductRepository{
+public class ProductRepositoryImpl implements ProductRepository {
 
     private final ProductEntityJpaRepository productEntityJpaRepository;
 
     @Override
     public List<Product> findProductByUserName(String userName) {
         return productEntityJpaRepository.findAll().stream()
-                .filter(productEntity -> productEntity.getName().equals(userName))
+                .filter(productEntity -> productEntity.getUserName().equals(userName))
                 .map(Product::from)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void insertProduct(Product product) {
+    public void createProduct(Product product) {
 
-        productEntityJpaRepository.save(ProductEntity.from(product));
+        if (productEntityJpaRepository.findById(product.getId()).isEmpty()) {
+            productEntityJpaRepository.save(ProductEntity.from(product));
+        } else {
+            log.warn("can't insert because product already exists in database");
+        }
     }
 
     @Override
     public void updateProduct(Product product) {
 
-        ProductEntity updatedProduct = ProductEntity.from(product);
+        var updatedProduct = ProductEntity.from(product);
 
         productEntityJpaRepository.findById(product.getId())
-                        .map(productToUpdate -> {
-                            productToUpdate.setProductComponentsEntities(updatedProduct.getProductComponentsEntities());
-                            productToUpdate.setName(updatedProduct.getName());
-                            productToUpdate.setUserName(updatedProduct.getUserName());
-                            return this.productEntityJpaRepository.save(productToUpdate);
-                        });
+                .map(productToUpdate -> {
+                    productToUpdate.setComponents(updatedProduct.getComponents());
+                    productToUpdate.setName(updatedProduct.getName());
+                    productToUpdate.setUserName(updatedProduct.getUserName());
+                    return this.productEntityJpaRepository.save(productToUpdate);
+                });
     }
 
     @Override
     public void deleteProduct(UUID uuid) {
-        productEntityJpaRepository.deleteById(uuid);
+        if (productEntityJpaRepository.findById(uuid).isPresent()) {
+            productEntityJpaRepository.deleteById(uuid);
+        } else {
+            log.warn("can't insert because product doesn't exists in database");
+
+        }
+
     }
 }
