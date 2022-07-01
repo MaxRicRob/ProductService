@@ -2,6 +2,7 @@ package com.example.ProductServiceApplication.api;
 
 import com.example.ProductServiceApplication.service.ProductService;
 import com.google.gson.Gson;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,8 +21,13 @@ public class RabbitController {
     @RabbitListener(queues = "${queue-names.default-products}")
     public String getAllDefaultProducts() {
 
-
         return new Gson().toJson(productService.getAllDefaultProducts());
+    }
+
+    @RabbitListener(queues = "${queue-names.user-products}")
+    public String getUserProducts(Message message) {
+
+        return new Gson().toJson(productService.getAllProductsFromUser(message.toString()));
     }
 
 

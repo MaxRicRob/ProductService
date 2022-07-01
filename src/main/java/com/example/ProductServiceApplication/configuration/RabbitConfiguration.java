@@ -29,6 +29,12 @@ public class RabbitConfiguration {
     @Value("${queue-names.default-products}")
     private String defaultProductsQueueName;
 
+    @Value("${routing-keys.user-products}")
+    private String userProductsRoutingKey;
+
+    @Value("${queue-names.user-products}")
+    private String userProductsQueueName;
+
     @Bean
     public RabbitController rabbitController() {
         return new RabbitController();
@@ -57,5 +63,16 @@ public class RabbitConfiguration {
     public Binding defaultProductsBinding(DirectExchange directExchange, Queue defaultProductsQueue) {
         return BindingBuilder.bind(defaultProductsQueue).to(directExchange).with(defaultProductsRoutingKey);
     }
+
+    @Bean
+    public Queue userProductsQueue() {
+        return new Queue(userProductsQueueName);
+    }
+
+    @Bean
+    public Binding userProductsBinding(DirectExchange directExchange, Queue userProductsQueue) {
+        return BindingBuilder.bind(userProductsQueue).to(directExchange).with(userProductsRoutingKey);
+    }
+
 
 }
