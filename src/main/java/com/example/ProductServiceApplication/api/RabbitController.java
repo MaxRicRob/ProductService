@@ -26,6 +26,7 @@ public class RabbitController {
 
     @RabbitListener(queues = "${queue-names.user-products}")
     public String getUserProducts(Message message) {
+        
         return new Gson().toJson(productService.getAllProductsFromUser(message.toString()));
     }
 
