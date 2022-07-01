@@ -4,18 +4,14 @@ package com.example.ProductServiceApplication.service;
 import com.example.ProductServiceApplication.domain.DefaultProduct;
 import com.example.ProductServiceApplication.domain.Product;
 import com.example.ProductServiceApplication.domain.ProductComponent;
-import com.example.ProductServiceApplication.repository.ProductComponentRepository;
-import com.example.ProductServiceApplication.repository.ProductRepository;
-import com.example.ProductServiceApplication.repository.jpa.ProductComponentEntity;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.ProductServiceApplication.domain.ProductComponentRepository;
+import com.example.ProductServiceApplication.domain.ProductRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -57,8 +53,8 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public void addProduct(Product product) {
-        productRepository.insertProduct(product);
+    public void createProduct(Product product) {
+        productRepository.createProduct(product);
     }
 
     public void updateProduct(Product product) {

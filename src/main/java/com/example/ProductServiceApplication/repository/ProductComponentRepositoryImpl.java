@@ -1,6 +1,7 @@
 package com.example.ProductServiceApplication.repository;
 
 import com.example.ProductServiceApplication.domain.ProductComponent;
+import com.example.ProductServiceApplication.domain.ProductComponentRepository;
 import com.example.ProductServiceApplication.repository.jpa.ProductComponentEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

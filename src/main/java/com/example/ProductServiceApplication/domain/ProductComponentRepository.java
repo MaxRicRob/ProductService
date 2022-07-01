@@ -1,4 +1,4 @@
-package com.example.ProductServiceApplication.repository;
+package com.example.ProductServiceApplication.domain;
 
 import com.example.ProductServiceApplication.domain.ProductComponent;
 

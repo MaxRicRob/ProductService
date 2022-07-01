@@ -1,5 +1,6 @@
 package com.example.ProductServiceApplication.api;
 
+import com.example.ProductServiceApplication.domain.Product;
 import com.example.ProductServiceApplication.service.ProductService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,12 @@ public class RabbitController {
             case "deleteProduct": {
                 var uuid = UUID.fromString(input[1]);
                 productService.deleteProduct(uuid);
+                return "deleted";
+            }
+            case "createProduct": {
+                var product = new Gson().fromJson(input[1], Product.class);
+                productService.createProduct(product);
+                return "created";
             }
             default: {
                 log.info("invalid input message - unable to parse");

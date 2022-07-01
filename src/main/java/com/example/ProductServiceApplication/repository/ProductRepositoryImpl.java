@@ -1,6 +1,7 @@
 package com.example.ProductServiceApplication.repository;
 
 import com.example.ProductServiceApplication.domain.Product;
+import com.example.ProductServiceApplication.domain.ProductRepository;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class ProductRepositoryImpl implements ProductRepository{
+public class ProductRepositoryImpl implements ProductRepository {
 
     private final ProductEntityJpaRepository productEntityJpaRepository;
 
@@ -27,7 +28,7 @@ public class ProductRepositoryImpl implements ProductRepository{
     }
 
     @Override
-    public void insertProduct(Product product) {
+    public void createProduct(Product product) {
 
         productEntityJpaRepository.save(ProductEntity.from(product));
     }

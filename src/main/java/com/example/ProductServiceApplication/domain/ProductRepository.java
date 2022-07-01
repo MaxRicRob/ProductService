@@ -1,4 +1,4 @@
-package com.example.ProductServiceApplication.repository;
+package com.example.ProductServiceApplication.domain;
 
 import com.example.ProductServiceApplication.domain.Product;
 
@@ -9,7 +9,7 @@ public interface ProductRepository {
 
     List<Product> findProductByUserName(String userName);
 
-    void insertProduct(Product product);
+    void createProduct(Product product);
 
     void updateProduct(Product product);
 
