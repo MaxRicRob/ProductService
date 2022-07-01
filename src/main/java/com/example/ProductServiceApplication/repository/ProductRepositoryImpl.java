@@ -33,7 +33,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         if (productEntityJpaRepository.findById(product.getId()).isEmpty()) {
             productEntityJpaRepository.save(ProductEntity.from(product));
         } else {
-            log.warn("can't insert because its already inside");
+            log.warn("can't insert because product already exists in database");
         }
     }
 
@@ -53,6 +53,12 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public void deleteProduct(UUID uuid) {
-        productEntityJpaRepository.deleteById(uuid);
+        if (productEntityJpaRepository.findById(uuid).isPresent()) {
+            productEntityJpaRepository.deleteById(uuid);
+        } else {
+            log.warn("can't insert because product doesn't exists in database");
+
+        }
+
     }
 }

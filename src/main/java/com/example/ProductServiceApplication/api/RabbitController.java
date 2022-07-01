@@ -36,7 +36,7 @@ public class RabbitController {
             case "deleteProduct": {
                 var uuid = UUID.fromString(input[1]);
                 productService.deleteProduct(uuid);
-                return "deleted";
+                return new Gson().toJson(new Product());
             }
             case "createProduct": {
                 var product = new Gson().fromJson(input[1], Product.class);
@@ -46,11 +46,11 @@ public class RabbitController {
             case "updateProduct": {
                 var product = new Gson().fromJson(input[1], Product.class);
                 productService.updateProduct(product);
-                return "updated";
+                return new Gson().toJson(product);
             }
             default: {
                 log.info("invalid input message - unable to parse");
-                return "";
+                return new Gson().toJson(new Product());
 
             }
         }
