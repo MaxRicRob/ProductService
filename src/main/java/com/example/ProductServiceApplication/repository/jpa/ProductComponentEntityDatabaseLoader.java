@@ -1,13 +1,13 @@
 package com.example.ProductServiceApplication.repository.jpa;
 
-import com.example.ProductServiceApplication.domain.ProductComponent;
+import com.example.ProductServiceApplication.entity.ProductComponent;
+import com.example.ProductServiceApplication.entity.ProductComponentEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.stream.Collectors;

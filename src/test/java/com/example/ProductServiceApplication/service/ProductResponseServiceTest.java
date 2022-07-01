@@ -1,6 +1,7 @@
 package com.example.ProductServiceApplication.service;
 
-import com.example.ProductServiceApplication.domain.DefaultProduct;
+import com.example.ProductServiceApplication.entity.DefaultProduct;
+import com.example.ProductServiceApplication.domain.ProductService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

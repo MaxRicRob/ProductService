@@ -1,7 +1,7 @@
 package com.example.ProductServiceApplication.api;
 
-import com.example.ProductServiceApplication.domain.Product;
-import com.example.ProductServiceApplication.service.ProductService;
+import com.example.ProductServiceApplication.entity.Product;
+import com.example.ProductServiceApplication.domain.ProductService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

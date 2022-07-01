@@ -1,6 +1,5 @@
-package com.example.ProductServiceApplication.domain;
+package com.example.ProductServiceApplication.entity;
 
-import com.example.ProductServiceApplication.repository.jpa.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

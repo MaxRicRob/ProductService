@@ -1,4 +1,6 @@
-package com.example.ProductServiceApplication.domain;
+package com.example.ProductServiceApplication.repository;
+
+import com.example.ProductServiceApplication.entity.Product;
 
 import java.util.List;
 import java.util.UUID;

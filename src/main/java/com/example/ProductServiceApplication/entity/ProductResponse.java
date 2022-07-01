@@ -1,7 +1,5 @@
-package com.example.ProductServiceApplication.service;
+package com.example.ProductServiceApplication.entity;
 
-import com.example.ProductServiceApplication.domain.Product;
-import com.example.ProductServiceApplication.domain.ProductComponent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

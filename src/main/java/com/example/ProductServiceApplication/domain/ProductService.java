@@ -1,16 +1,15 @@
-package com.example.ProductServiceApplication.service;
+package com.example.ProductServiceApplication.domain;
 
 
-import com.example.ProductServiceApplication.domain.DefaultProduct;
-import com.example.ProductServiceApplication.domain.Product;
-import com.example.ProductServiceApplication.domain.ProductComponent;
-import com.example.ProductServiceApplication.domain.ProductComponentRepository;
-import com.example.ProductServiceApplication.domain.ProductRepository;
-
+import com.example.ProductServiceApplication.entity.DefaultProduct;
+import com.example.ProductServiceApplication.entity.Product;
+import com.example.ProductServiceApplication.entity.ProductComponent;
+import com.example.ProductServiceApplication.entity.ProductResponse;
+import com.example.ProductServiceApplication.repository.ProductComponentRepository;
+import com.example.ProductServiceApplication.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +30,7 @@ public class ProductService {
 
     public List<DefaultProduct> getAllDefaultProducts() {
 
-        Flux<DefaultProduct> defaultProductFlux = webClient
+        var defaultProductFlux = webClient
                 .get()
                 .uri("defaultProducts")
                 .retrieve()
