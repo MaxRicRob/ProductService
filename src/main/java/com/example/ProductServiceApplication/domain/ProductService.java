@@ -21,7 +21,7 @@ public class ProductService {
 
     private final ProductComponentRepository productComponentRepository;
     private final ProductRepository productRepository;
-    private final WebClient webClient = WebClient.create("http://localhost:8081");
+    private final WebClient webClient = WebClient.create("http://WarehouseApp:8081");
 
 
     public List<ProductComponent> getAllProductComponents() {

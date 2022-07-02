@@ -18,6 +18,8 @@ services:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       timeout: 20s
       retries: 10
+    networks:
+      - backend
 
   app:
     depends_on:
@@ -39,3 +41,10 @@ services:
       - SPRING_DATASOURCE_PASSWORD=pw
     volumes:
       - ./:/app/app
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: KBE
+    external: true

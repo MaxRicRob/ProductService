@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductComponentEntityDatabaseLoader {
 
-    private final WebClient webClient = WebClient.create("http://localhost:8081");
+    private final WebClient webClient = WebClient.create("http://WarehouseApp:8081");
 
     @Bean
     CommandLineRunner initDatabase(ProductComponentEntityJpaRepository repository) {
