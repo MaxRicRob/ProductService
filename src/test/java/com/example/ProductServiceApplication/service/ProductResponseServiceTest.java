@@ -13,7 +13,7 @@ class ProductResponseServiceTest {
     @Test
     void getAllDefaultProducts() {
 
-        ProductService productService = new ProductService(null, null);
+        ProductService productService = new ProductService(null, null, null);
 
         List<DefaultProduct> allDefaultProducts = productService.getAllDefaultProducts();
 
