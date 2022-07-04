@@ -2,7 +2,7 @@ version: "3.9"
 services:
   mysqlDb:
     image: mysql:latest
-    restart: always
+    restart: unless-stopped
     cap_add:
       - SYS_NICE
     ports:
@@ -26,7 +26,7 @@ services:
       mysqlDb:
         condition: service_healthy
     container_name: ProductServiceApplication
-    restart: on-failure
+    restart: unless-stopped
     command: java -jar target/ProductServiceApplication-0.0.1-SNAPSHOT.jar
     build:
       context: .
