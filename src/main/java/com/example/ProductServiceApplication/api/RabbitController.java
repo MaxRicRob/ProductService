@@ -24,36 +24,63 @@ public class RabbitController {
 
         switch (input[0]) {
             case "getComponents": {
-                return new Gson().toJson(productService.getAllProductComponents());
+                return getComponentsFromProductService();
             }
             case "getDefaultProducts": {
-                return new Gson().toJson(productService.getAllDefaultProducts());
+                return getDefaultProductsFromProductService();
             }
             case "getProductsFromUser": {
                 var userName = input[1];
-                return new Gson().toJson(productService.getAllProductsFromUser(userName));
+                return getAllUserProductsFromProductService(userName);
             }
             case "deleteProduct": {
-                var uuid = UUID.fromString(input[1]);
-                productService.deleteProduct(uuid);
-                return new Gson().toJson(new Product());
+                var userId = UUID.fromString(input[1]);
+                return deleteProductById(userId);
             }
             case "createProduct": {
                 var product = new Gson().fromJson(input[1], Product.class);
-                productService.createProduct(product);
-                return new Gson().toJson(product);
+                return createProduct(product);
             }
             case "updateProduct": {
                 var product = new Gson().fromJson(input[1], Product.class);
-                productService.updateProduct(product);
-                return new Gson().toJson(product);
+                return updateProduct(product);
             }
             default: {
-                log.info("invalid input message - unable to parse");
-                return new Gson().toJson(new Product());
-
+                return logInvalidInput();
             }
         }
+    }
+
+    private String logInvalidInput() {
+        log.info("invalid input message - unable to parse");
+        return new Gson().toJson(new Product());
+    }
+
+    private String updateProduct(Product product) {
+        productService.updateProduct(product);
+        return new Gson().toJson(product);
+    }
+
+    private String createProduct(Product product) {
+        productService.createProduct(product);
+        return new Gson().toJson(product);
+    }
+
+    private String deleteProductById(UUID uuid) {
+        productService.deleteProduct(uuid);
+        return new Gson().toJson(new Product());
+    }
+
+    private String getAllUserProductsFromProductService(String userName) {
+        return new Gson().toJson(productService.getAllProductsFromUser(userName));
+    }
+
+    private String getDefaultProductsFromProductService() {
+        return new Gson().toJson(productService.getAllDefaultProducts());
+    }
+
+    private String getComponentsFromProductService() {
+        return new Gson().toJson(productService.getAllProductComponents());
     }
 
     private String[] parseMessage(Message message) {
