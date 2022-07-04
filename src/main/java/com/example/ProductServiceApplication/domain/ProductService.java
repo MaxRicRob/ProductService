@@ -5,6 +5,7 @@ import com.example.ProductServiceApplication.entity.DefaultProduct;
 import com.example.ProductServiceApplication.entity.Product;
 import com.example.ProductServiceApplication.entity.ProductComponent;
 import com.example.ProductServiceApplication.entity.ProductResponse;
+import com.example.ProductServiceApplication.repository.DefaultProductRepository;
 import com.example.ProductServiceApplication.repository.ProductComponentRepository;
 import com.example.ProductServiceApplication.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class ProductService {
 
     private final ProductComponentRepository productComponentRepository;
     private final ProductRepository productRepository;
+    private final DefaultProductRepository defaultProductRepository;
     private final WebClient webClient = WebClient.create("http://WarehouseApp:8081");
 
 
@@ -29,17 +31,7 @@ public class ProductService {
     }
 
     public List<DefaultProduct> getAllDefaultProducts() {
-
-        var defaultProductFlux = webClient
-                .get()
-                .uri("defaultProducts")
-                .retrieve()
-                .bodyToFlux(DefaultProduct.class);
-        defaultProductFlux.subscribe();
-
-        return defaultProductFlux
-                .toStream()
-                .collect(Collectors.toList());
+        return defaultProductRepository.findAll();
     }
 
 
