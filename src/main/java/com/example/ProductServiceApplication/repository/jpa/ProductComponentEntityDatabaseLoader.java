@@ -25,7 +25,7 @@ public class ProductComponentEntityDatabaseLoader {
     CommandLineRunner initDatabase(ProductComponentEntityJpaRepository productComponentEntityJpaRepository,
                                    DefaultProductEntityJpaRepository defaultProductEntityJpaRepository) {
         return args -> {
-            log.info("initiating ProductComponentEntityDatabaseLoader");
+            log.info("initiating ProductService DatabaseLoader");
             var productComponents = getProductComponentEntitiesFromWarehouse();
             var productComponentsWithoutDuplicates = removeDuplicates(
                     productComponentEntityJpaRepository,
@@ -39,7 +39,7 @@ public class ProductComponentEntityDatabaseLoader {
                     defaultProducts
             );
             defaultProductEntityJpaRepository.saveAll(defaultProductsWithoutDuplicates);
-            log.info("ProductComponentEntityDatabaseLoader initiated");
+            log.info("ProductService DatabaseLoader initiated");
         };
     }
 
@@ -52,7 +52,7 @@ public class ProductComponentEntityDatabaseLoader {
                 .bodyToFlux(ProductComponentResponse.class);
 
         productComponentFlux.subscribe();
-
+        log.info("Product Components received from Warehouse");
         return productComponentFlux.toStream()
                 .map(ProductComponentEntity::from)
                 .collect(Collectors.toList());
@@ -65,7 +65,7 @@ public class ProductComponentEntityDatabaseLoader {
                 .retrieve()
                 .bodyToFlux(DefaultProductResponse.class);
         defaultProductFlux.subscribe();
-
+        log.info("Default Product received from Warehouse");
         return defaultProductFlux.toStream()
                 .map(DefaultProductEntity::from)
                 .collect(Collectors.toList());
