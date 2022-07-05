@@ -20,9 +20,9 @@ public class RabbitController {
     @RabbitListener(queues = "${queue-names.product-service}")
     public String handleRequest(Message message) {
 
-        var input = parseMessage(message);
+        var key = getKey(message);
 
-        switch (input[0]) {
+        switch (key) {
             case "getComponents": {
                 return getComponentsFromProductService();
             }
@@ -30,25 +30,37 @@ public class RabbitController {
                 return getDefaultProductsFromProductService();
             }
             case "getProductsFromUser": {
-                var userName = input[1];
+                var userName = getMessageBody(message);
                 return getAllUserProductsFromProductService(userName);
             }
             case "deleteProduct": {
-                var userId = UUID.fromString(input[1]);
+                var userId = extractUserIdFromMessage(message);
                 return deleteProductById(userId);
             }
             case "createProduct": {
-                var product = new Gson().fromJson(input[1], Product.class);
+                var product = extractProductFromMessage(message);
                 return createProduct(product);
             }
             case "updateProduct": {
-                var product = new Gson().fromJson(input[1], Product.class);
+                var product = extractProductFromMessage(message);
                 return updateProduct(product);
             }
             default: {
                 return logInvalidInput();
             }
         }
+    }
+
+    private UUID extractUserIdFromMessage(Message message) {
+        return UUID.fromString(getMessageBody(message));
+    }
+
+    private Product extractProductFromMessage(Message message) {
+        return new Gson().fromJson(getMessageBody(message), Product.class);
+    }
+
+    private String getMessageBody(Message message) {
+        return new String(message.getBody(), StandardCharsets.UTF_8);
     }
 
     private String logInvalidInput() {
@@ -83,8 +95,8 @@ public class RabbitController {
         return new Gson().toJson(productService.getAllProductComponents());
     }
 
-    private String[] parseMessage(Message message) {
-        return new String(message.getBody(), StandardCharsets.UTF_8).split("_");
+    private String getKey(Message message) {
+        return (String) message.getMessageProperties().getHeaders().get("key");
     }
 
 
