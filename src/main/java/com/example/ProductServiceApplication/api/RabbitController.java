@@ -20,9 +20,8 @@ public class RabbitController {
     @RabbitListener(queues = "${queue-names.product-service}")
     public String handleRequest(Message message) {
 
-        var key = getKeyFrom(message);
-
-        switch (key) {
+        var type = message.getMessageProperties().getType();
+        switch (type) {
             case "getComponents": {
                 return getComponents();
             }
@@ -94,10 +93,5 @@ public class RabbitController {
     private String getComponents() {
         return new Gson().toJson(productService.getAllProductComponents());
     }
-
-    private String getKeyFrom(Message message) {
-        return (String) message.getMessageProperties().getHeaders().get("key");
-    }
-
 
 }
