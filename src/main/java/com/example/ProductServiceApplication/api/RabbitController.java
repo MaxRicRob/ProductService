@@ -45,7 +45,7 @@ public class RabbitController {
                 return updateProduct(product);
             }
             default: {
-                return logInvalidInput();
+                return logInvalidMessageType(type);
             }
         }
     }
@@ -62,8 +62,8 @@ public class RabbitController {
         return new String(message.getBody(), StandardCharsets.UTF_8);
     }
 
-    private String logInvalidInput() {
-        log.info("invalid input message - unable to parse");
+    private String logInvalidMessageType(String type) {
+        log.info("invalid message type: " + type);
         return new Gson().toJson(new Product());
     }
 
