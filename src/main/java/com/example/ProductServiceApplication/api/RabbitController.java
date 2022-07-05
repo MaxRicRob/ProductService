@@ -24,25 +24,25 @@ public class RabbitController {
 
         switch (key) {
             case "getComponents": {
-                return getComponentsFromProductService();
+                return getComponents();
             }
             case "getDefaultProducts": {
-                return getDefaultProductsFromProductService();
+                return getDefaultProducts();
             }
             case "getProductsFromUser": {
-                var userName = getMessageBody(message);
-                return getAllUserProductsFromProductService(userName);
+                var userName = getBodyFrom(message);
+                return getAllUserProducts(userName);
             }
             case "deleteProduct": {
-                var userId = extractUserIdFromMessage(message);
+                var userId = extractUserIdFrom(message);
                 return deleteProductById(userId);
             }
             case "createProduct": {
-                var product = extractProductFromMessage(message);
+                var product = extractProductFrom(message);
                 return createProduct(product);
             }
             case "updateProduct": {
-                var product = extractProductFromMessage(message);
+                var product = extractProductFrom(message);
                 return updateProduct(product);
             }
             default: {
@@ -51,15 +51,15 @@ public class RabbitController {
         }
     }
 
-    private UUID extractUserIdFromMessage(Message message) {
-        return UUID.fromString(getMessageBody(message));
+    private UUID extractUserIdFrom(Message message) {
+        return UUID.fromString(getBodyFrom(message));
     }
 
-    private Product extractProductFromMessage(Message message) {
-        return new Gson().fromJson(getMessageBody(message), Product.class);
+    private Product extractProductFrom(Message message) {
+        return new Gson().fromJson(getBodyFrom(message), Product.class);
     }
 
-    private String getMessageBody(Message message) {
+    private String getBodyFrom(Message message) {
         return new String(message.getBody(), StandardCharsets.UTF_8);
     }
 
@@ -83,15 +83,15 @@ public class RabbitController {
         return new Gson().toJson(new Product());
     }
 
-    private String getAllUserProductsFromProductService(String userName) {
+    private String getAllUserProducts(String userName) {
         return new Gson().toJson(productService.getAllProductsFromUser(userName));
     }
 
-    private String getDefaultProductsFromProductService() {
+    private String getDefaultProducts() {
         return new Gson().toJson(productService.getAllDefaultProducts());
     }
 
-    private String getComponentsFromProductService() {
+    private String getComponents() {
         return new Gson().toJson(productService.getAllProductComponents());
     }
 
