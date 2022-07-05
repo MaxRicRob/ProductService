@@ -10,7 +10,6 @@ import com.example.ProductServiceApplication.repository.ProductComponentReposito
 import com.example.ProductServiceApplication.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +22,6 @@ public class ProductService {
     private final ProductComponentRepository productComponentRepository;
     private final ProductRepository productRepository;
     private final DefaultProductRepository defaultProductRepository;
-    private final WebClient webClient = WebClient.create("http://WarehouseApp:8081");
 
 
     public List<ProductComponent> getAllProductComponents() {
