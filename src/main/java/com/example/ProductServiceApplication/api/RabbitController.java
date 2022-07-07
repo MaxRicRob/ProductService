@@ -20,32 +20,32 @@ public class RabbitController {
     @RabbitListener(queues = "${queue-names.product-service}")
     public String handleRequest(Message message) {
 
-        var type = message.getMessageProperties().getType();
+        var type = MessageType.valueOf(message.getMessageProperties().getType());
         switch (type) {
-            case "getComponents": {
+            case GET_COMPONENTS: {
                 return getComponents();
             }
-            case "getDefaultProducts": {
+            case GET_DEFAULT_PRODUCTS: {
                 return getDefaultProducts();
             }
-            case "getProductsFromUser": {
+            case GET_PRODUCTS_FROM_USER: {
                 var userName = getBodyFrom(message);
                 return getAllUserProducts(userName);
             }
-            case "deleteProduct": {
+            case DELETE_PRODUCT: {
                 var userId = extractUserIdFrom(message);
                 return deleteProductById(userId);
             }
-            case "createProduct": {
+            case CREATE_PRODUCT: {
                 var product = extractProductFrom(message);
                 return createProduct(product);
             }
-            case "updateProduct": {
+            case UPDATE_PRODUCT: {
                 var product = extractProductFrom(message);
                 return updateProduct(product);
             }
             default: {
-                return logInvalidMessageType(type);
+                return logInvalidMessageType(type.name());
             }
         }
     }
