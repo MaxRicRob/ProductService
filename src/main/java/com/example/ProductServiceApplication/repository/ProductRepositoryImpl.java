@@ -5,7 +5,6 @@ import com.example.ProductServiceApplication.entity.ProductEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,10 +18,8 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     private final ProductEntityJpaRepository productEntityJpaRepository;
 
-    @Cacheable(value = "userProductCache")
     @Override
     public List<Product> findProductByUserName(String userName) {
-        log.info("get products from user without cache");
         return productEntityJpaRepository.findAll().stream()
                 .filter(productEntity -> productEntity.getUserName().equals(userName))
                 .map(Product::from)
