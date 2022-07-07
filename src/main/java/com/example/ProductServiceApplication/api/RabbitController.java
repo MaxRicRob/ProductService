@@ -20,8 +20,14 @@ public class RabbitController {
     @RabbitListener(queues = "${queue-names.product-service}")
     public String handleRequest(Message message) {
 
-        var type = MessageType.valueOf(message.getMessageProperties().getType());
-        switch (type) {
+        final MessageType messageType;
+        try {
+            messageType = MessageType.valueOf(message.getMessageProperties().getType());
+        } catch (IllegalArgumentException e) {
+            return logInvalidMessageType(message.getMessageProperties().getType());
+        }
+
+        switch (messageType) {
             case GET_COMPONENTS: {
                 return getComponents();
             }
@@ -45,7 +51,7 @@ public class RabbitController {
                 return updateProduct(product);
             }
             default: {
-                return logInvalidMessageType(type.name());
+                return logInvalidMessageType(message.getMessageProperties().getType());
             }
         }
     }
