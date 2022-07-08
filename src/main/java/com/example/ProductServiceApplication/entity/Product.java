@@ -20,6 +20,7 @@ public class Product {
     private UUID id;
     private String name;
     private String userName;
+    private long totalPrice;
     private List<ProductComponent> components;
 
     public static Product from(ProductEntity productEntity) {

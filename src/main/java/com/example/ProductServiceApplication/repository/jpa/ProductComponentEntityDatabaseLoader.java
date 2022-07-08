@@ -1,7 +1,5 @@
 package com.example.ProductServiceApplication.repository.jpa;
 
-import com.example.ProductServiceApplication.entity.DefaultProductResponse;
-import com.example.ProductServiceApplication.entity.ProductComponentResponse;
 import com.example.ProductServiceApplication.entity.DefaultProductEntity;
 import com.example.ProductServiceApplication.entity.ProductComponentEntity;
 import lombok.RequiredArgsConstructor;
@@ -49,12 +47,13 @@ public class ProductComponentEntityDatabaseLoader {
                 .get()
                 .uri("components")
                 .retrieve()
-                .bodyToFlux(ProductComponentResponse.class);
+                .bodyToFlux(ProductComponentEntity.class);
 
         productComponentFlux.subscribe();
         log.info("Product Components received from Warehouse");
-        return productComponentFlux.toStream()
-                .map(ProductComponentEntity::from)
+
+        return productComponentFlux
+                .toStream()
                 .collect(Collectors.toList());
     }
 
@@ -63,11 +62,12 @@ public class ProductComponentEntityDatabaseLoader {
                 .get()
                 .uri("defaultProducts")
                 .retrieve()
-                .bodyToFlux(DefaultProductResponse.class);
+                .bodyToFlux(DefaultProductEntity.class);
         defaultProductFlux.subscribe();
         log.info("Default Product received from Warehouse");
-        return defaultProductFlux.toStream()
-                .map(DefaultProductEntity::from)
+
+        return defaultProductFlux
+                .toStream()
                 .collect(Collectors.toList());
     }
 
