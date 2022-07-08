@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+
 @Slf4j
 public class RabbitController {
 
@@ -79,6 +80,7 @@ public class RabbitController {
     }
 
     private String createProduct(Product product) {
+        product.setId(UUID.randomUUID());
         productService.createProduct(product);
         return new Gson().toJson(product);
     }
@@ -101,3 +103,4 @@ public class RabbitController {
     }
 
 }
+

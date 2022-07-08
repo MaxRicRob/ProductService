@@ -42,21 +42,8 @@ public class ProductComponentEntity {
     @Column(nullable = false)
     private int calories;
 
-    public static ProductComponentEntity from(ProductComponentResponse productComponentResponse) {
-        return new ProductComponentEntity()
-                .setId(productComponentResponse.getId())
-                .setName(productComponentResponse.getName())
-                .setPrice(productComponentResponse.getPrice())
-                .setWeight(productComponentResponse.getWeight())
-                .setColor(productComponentResponse.getColor())
-                .setOrigin(productComponentResponse.getOrigin())
-                .setAwesomeness(productComponentResponse.getAwesomeness())
-                .setFarmer(productComponentResponse.getFarmer())
-                .setOrganic(productComponentResponse.isOrganic())
-                .setCalories(productComponentResponse.getCalories());
-    }
-
     public static ProductComponentEntity from(ProductComponent productComponent) {
+
         return new ProductComponentEntity()
                 .setId(productComponent.getId())
                 .setName(productComponent.getName())
