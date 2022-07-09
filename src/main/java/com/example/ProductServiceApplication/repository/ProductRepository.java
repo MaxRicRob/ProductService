@@ -1,5 +1,6 @@
 package com.example.ProductServiceApplication.repository;
 
+import com.example.ProductServiceApplication.api.error.ErrorResponseException;
 import com.example.ProductServiceApplication.entity.Product;
 
 import java.util.List;
@@ -9,10 +10,10 @@ public interface ProductRepository {
 
     List<Product> findProductByUserName(String userName);
 
-    void createProduct(Product product);
+    Product createProduct(Product product) throws ErrorResponseException;
 
-    void updateProduct(Product product);
+    void updateProduct(Product product) throws ErrorResponseException;
 
-    void deleteProduct(UUID uuid);
+    void deleteProduct(UUID uuid) throws ErrorResponseException;
 }
 

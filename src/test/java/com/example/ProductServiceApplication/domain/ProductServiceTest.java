@@ -1,5 +1,6 @@
 package com.example.ProductServiceApplication.domain;
 
+import com.example.ProductServiceApplication.api.error.ErrorResponseException;
 import com.example.ProductServiceApplication.entity.Product;
 import com.example.ProductServiceApplication.repository.DefaultProductRepository;
 import com.example.ProductServiceApplication.repository.ProductComponentRepository;
@@ -12,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -56,22 +58,31 @@ class ProductServiceTest {
 
     @Test
     void createProduct() {
-        productService.createProduct(product);
-
-        verify(productRepository).createProduct(any(Product.class));
+        try {
+            productService.createProduct(product);
+            verify(productRepository).createProduct(any(Product.class));
+        } catch (ErrorResponseException e) {
+            fail();
+        }
     }
 
     @Test
     void updateProduct() {
-        productService.updateProduct(product);
-
-        verify(productRepository).updateProduct(any(Product.class));
+        try {
+            productService.updateProduct(product);
+            verify(productRepository).updateProduct(any(Product.class));
+        } catch (ErrorResponseException e) {
+            fail();
+        }
     }
 
     @Test
     void deleteProduct() {
-        productService.deleteProduct(UUID.randomUUID());
-
-        verify(productRepository).deleteProduct(any(UUID.class));
+        try {
+            productService.deleteProduct(UUID.randomUUID());
+            verify(productRepository).deleteProduct(any(UUID.class));
+        } catch (ErrorResponseException e) {
+            fail();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.ProductServiceApplication.api;
 
+import com.example.ProductServiceApplication.api.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.ProductService;
 import com.example.ProductServiceApplication.entity.Product;
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import org.springframework.amqp.core.MessageProperties;
 import java.util.UUID;
 
 import static com.example.ProductServiceApplication.api.MessageType.*;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -76,7 +78,11 @@ class RabbitControllerTest {
 
         rabbitController.handleRequest(message);
 
-        verify(productService).deleteProduct(any());
+        try {
+            verify(productService).deleteProduct(any());
+        } catch (ErrorResponseException e) {
+            fail();
+        }
     }
 
     @Test
@@ -87,7 +93,11 @@ class RabbitControllerTest {
 
         rabbitController.handleRequest(message);
 
-        verify(productService).createProduct(any());
+        try {
+            verify(productService).createProduct(any());
+        } catch (ErrorResponseException e) {
+            fail();
+        }
     }
 
     @Test
@@ -98,7 +108,11 @@ class RabbitControllerTest {
 
         rabbitController.handleRequest(message);
 
-        verify(productService).updateProduct(any());
+        try {
+            verify(productService).updateProduct(any());
+        } catch (ErrorResponseException e) {
+            fail();
+        }
     }
 
     @Test

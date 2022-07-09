@@ -1,5 +1,6 @@
 package com.example.ProductServiceApplication.repository;
 
+import com.example.ProductServiceApplication.api.error.ErrorResponseException;
 import com.example.ProductServiceApplication.entity.Product;
 import com.example.ProductServiceApplication.entity.ProductEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
@@ -20,6 +21,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<Product> findProductByUserName(String userName) {
+
         return productEntityJpaRepository.findAll().stream()
                 .filter(productEntity -> productEntity.getUserName().equals(userName))
                 .map(Product::from)
@@ -27,37 +29,52 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void createProduct(Product product) {
+    public Product createProduct(Product product) throws ErrorResponseException {
 
-        if (productEntityJpaRepository.findById(product.getId()).isEmpty()) {
-            productEntityJpaRepository.save(ProductEntity.from(product));
-        } else {
-            log.warn("can't insert because product already exists in database");
+        if (productIsPresent(product)) {
+            log.error("product with id: {} already exists in database", product.getId());
+            throw new ErrorResponseException();
         }
+        return Product.from(productEntityJpaRepository.save(ProductEntity.from(product)));
     }
 
     @Override
-    public void updateProduct(Product product) {
+    public void updateProduct(Product product) throws ErrorResponseException {
 
         var updatedProduct = ProductEntity.from(product);
 
-        productEntityJpaRepository.findById(product.getId())
-                .map(productToUpdate -> {
-                    productToUpdate.setComponents(updatedProduct.getComponents());
-                    productToUpdate.setName(updatedProduct.getName());
-                    productToUpdate.setUserName(updatedProduct.getUserName());
-                    return this.productEntityJpaRepository.save(productToUpdate);
-                });
+        if (productIsPresent(product)) {
+            productEntityJpaRepository.findById(product.getId())
+                    .map(productToUpdate -> {
+                        productToUpdate.setComponents(updatedProduct.getComponents());
+                        productToUpdate.setName(updatedProduct.getName());
+                        productToUpdate.setUserName(updatedProduct.getUserName());
+                        return this.productEntityJpaRepository.save(productToUpdate);
+                    });
+        }
+        trackError(product.getId());
+        throw new ErrorResponseException();
     }
 
     @Override
-    public void deleteProduct(UUID uuid) {
-        if (productEntityJpaRepository.findById(uuid).isPresent()) {
+    public void deleteProduct(UUID uuid) throws ErrorResponseException {
+        if (productIsPresent(uuid)) {
             productEntityJpaRepository.deleteById(uuid);
         } else {
-            log.warn("can't insert because product doesn't exists in database");
-
+            trackError(uuid);
+            throw new ErrorResponseException();
         }
+    }
 
+    private void trackError(UUID uuid) {
+        log.error("can't find product with id: {} in database", uuid);
+    }
+
+    private boolean productIsPresent(UUID uuid) {
+        return productEntityJpaRepository.findById(uuid).isPresent();
+    }
+
+    private boolean productIsPresent(Product product) {
+        return productEntityJpaRepository.findById(product.getId()).isPresent();
     }
 }

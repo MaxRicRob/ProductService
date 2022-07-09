@@ -1,5 +1,6 @@
 package com.example.ProductServiceApplication.api;
 
+import com.example.ProductServiceApplication.api.error.ErrorResponseException;
 import com.example.ProductServiceApplication.entity.Product;
 import com.example.ProductServiceApplication.domain.ProductService;
 import com.google.gson.Gson;
@@ -28,33 +29,41 @@ public class RabbitController {
             return logInvalidMessageType(message.getMessageProperties().getType());
         }
 
-        switch (messageType) {
-            case GET_COMPONENTS: {
-                return getComponents();
+        try {
+            switch (messageType) {
+                case GET_COMPONENTS: {
+                    return getComponents();
+                }
+                case GET_DEFAULT_PRODUCTS: {
+                    return getDefaultProducts();
+                }
+                case GET_PRODUCTS_FROM_USER: {
+                    var userName = getBodyFrom(message);
+                    return getAllUserProducts(userName);
+                }
+                case DELETE_PRODUCT: {
+                    var userId = extractUserIdFrom(message);
+                    return deleteProductById(userId);
+                }
+                case CREATE_PRODUCT: {
+                    var product = extractProductFrom(message);
+                    return createProduct(product);
+                }
+                case UPDATE_PRODUCT: {
+                    var product = extractProductFrom(message);
+                    return updateProduct(product);
+                }
+                default: {
+                    return logInvalidMessageType(message.getMessageProperties().getType());
+                }
             }
-            case GET_DEFAULT_PRODUCTS: {
-                return getDefaultProducts();
-            }
-            case GET_PRODUCTS_FROM_USER: {
-                var userName = getBodyFrom(message);
-                return getAllUserProducts(userName);
-            }
-            case DELETE_PRODUCT: {
-                var userId = extractUserIdFrom(message);
-                return deleteProductById(userId);
-            }
-            case CREATE_PRODUCT: {
-                var product = extractProductFrom(message);
-                return createProduct(product);
-            }
-            case UPDATE_PRODUCT: {
-                var product = extractProductFrom(message);
-                return updateProduct(product);
-            }
-            default: {
-                return logInvalidMessageType(message.getMessageProperties().getType());
-            }
+        } catch (ErrorResponseException e) {
+            return errorResponse();
         }
+    }
+
+    private String errorResponse() {
+        return "errorResponse";
     }
 
     private UUID extractUserIdFrom(Message message) {
@@ -74,18 +83,17 @@ public class RabbitController {
         return new Gson().toJson(new Product());
     }
 
-    private String updateProduct(Product product) {
+    private String updateProduct(Product product) throws ErrorResponseException {
         productService.updateProduct(product);
         return new Gson().toJson(product);
     }
 
-    private String createProduct(Product product) {
+    private String createProduct(Product product) throws ErrorResponseException {
         product.setId(UUID.randomUUID());
-        productService.createProduct(product);
-        return new Gson().toJson(product);
+        return new Gson().toJson(productService.createProduct(product));
     }
 
-    private String deleteProductById(UUID uuid) {
+    private String deleteProductById(UUID uuid) throws ErrorResponseException {
         productService.deleteProduct(uuid);
         return new Gson().toJson(new Product());
     }
@@ -101,6 +109,5 @@ public class RabbitController {
     private String getComponents() {
         return new Gson().toJson(productService.getAllProductComponents());
     }
-
 }
 
