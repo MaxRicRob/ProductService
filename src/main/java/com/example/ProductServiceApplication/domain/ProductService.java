@@ -1,6 +1,7 @@
 package com.example.ProductServiceApplication.domain;
 
 
+import com.example.ProductServiceApplication.api.error.ErrorResponseException;
 import com.example.ProductServiceApplication.entity.DefaultProduct;
 import com.example.ProductServiceApplication.entity.PriceRequest;
 import com.example.ProductServiceApplication.entity.Product;
@@ -42,15 +43,15 @@ public class ProductService {
         return products;
     }
 
-    public void createProduct(Product product) {
-        productRepository.createProduct(product);
+    public Product createProduct(Product product) throws ErrorResponseException {
+        return productRepository.createProduct(product);
     }
 
-    public void updateProduct(Product product) {
+    public void updateProduct(Product product) throws ErrorResponseException {
         productRepository.updateProduct(product);
     }
 
-    public void deleteProduct(UUID uuid) {
+    public void deleteProduct(UUID uuid) throws ErrorResponseException {
         productRepository.deleteProduct(uuid);
     }
 
