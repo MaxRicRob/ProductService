@@ -63,7 +63,7 @@ public class RabbitController {
     }
 
     private String errorResponse() {
-        return new Gson().toJson("errorResponse");
+        return "errorResponse";
     }
 
     private UUID extractUserIdFrom(Message message) {
