@@ -1,8 +1,8 @@
 package com.example.ProductServiceApplication.repository;
 
 import com.example.ProductServiceApplication.api.error.ErrorResponseException;
-import com.example.ProductServiceApplication.entity.Product;
-import com.example.ProductServiceApplication.entity.ProductEntity;
+import com.example.ProductServiceApplication.domain.entity.Product;
+import com.example.ProductServiceApplication.domain.entity.ProductEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

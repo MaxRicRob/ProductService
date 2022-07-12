@@ -1,7 +1,8 @@
 package com.example.ProductServiceApplication.api;
 
 import com.example.ProductServiceApplication.api.error.ErrorResponseException;
-import com.example.ProductServiceApplication.entity.Product;
+import com.example.ProductServiceApplication.domain.MessageType;
+import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.domain.ProductService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;

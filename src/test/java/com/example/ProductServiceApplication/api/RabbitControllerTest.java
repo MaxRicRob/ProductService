@@ -2,7 +2,7 @@ package com.example.ProductServiceApplication.api;
 
 import com.example.ProductServiceApplication.api.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.ProductService;
-import com.example.ProductServiceApplication.entity.Product;
+import com.example.ProductServiceApplication.domain.entity.Product;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.springframework.amqp.core.MessageProperties;
 
 import java.util.UUID;
 
-import static com.example.ProductServiceApplication.api.MessageType.*;
+import static com.example.ProductServiceApplication.domain.MessageType.*;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
