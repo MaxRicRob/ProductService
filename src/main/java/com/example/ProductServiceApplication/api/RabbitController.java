@@ -87,7 +87,7 @@ public class RabbitController {
 
     private String logInvalidMessageType(String type) {
         log.info("invalid message type: " + type);
-        return new Gson().toJson(new Product());
+        return errorResponse();
     }
 
     private String updateProduct(Product product) throws ErrorResponseException {
