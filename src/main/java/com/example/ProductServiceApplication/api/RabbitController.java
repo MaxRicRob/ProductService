@@ -32,29 +32,35 @@ public class RabbitController {
         try {
             switch (messageType) {
                 case GET_COMPONENTS: {
+                    log.info("get components request processed");
                     return getComponents();
                 }
                 case GET_DEFAULT_PRODUCTS: {
+                    log.info("get default product request processed");
                     return getDefaultProducts();
                 }
                 case GET_PRODUCTS_FROM_USER: {
                     var userName = getBodyFrom(message);
+                    log.info("get products from user {} request processed", userName);
                     return getAllUserProducts(userName);
                 }
                 case DELETE_PRODUCT: {
                     var userId = extractUserIdFrom(message);
+                    log.info("delete products with id {} request processed", userId);
                     return deleteProductById(userId);
                 }
                 case CREATE_PRODUCT: {
                     var product = extractProductFrom(message);
+                    log.info("create product for product {} request processed", product.getName());
                     return createProduct(product);
                 }
                 case UPDATE_PRODUCT: {
                     var product = extractProductFrom(message);
+                    log.info("update product for product {} request processed", product.getName());
                     return updateProduct(product);
                 }
                 default: {
-                    return logInvalidMessageType(message.getMessageProperties().getType());
+                    return errorResponse();
                 }
             }
         } catch (ErrorResponseException e) {
@@ -63,6 +69,7 @@ public class RabbitController {
     }
 
     private String errorResponse() {
+        log.error("respond with message 'errorResponse'");
         return "errorResponse";
     }
 
