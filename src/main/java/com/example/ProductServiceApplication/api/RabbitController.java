@@ -97,7 +97,6 @@ public class RabbitController {
     }
 
     private String createProduct(Product product) throws ErrorResponseException {
-        product.setId(UUID.randomUUID());
         return new Gson().toJson(productService.createProduct(product));
     }
 

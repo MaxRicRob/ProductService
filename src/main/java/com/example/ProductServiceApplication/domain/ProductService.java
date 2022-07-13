@@ -44,6 +44,7 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) throws ErrorResponseException {
+        product.setId(UUID.randomUUID());
         return productRepository.createProduct(product);
     }
 
