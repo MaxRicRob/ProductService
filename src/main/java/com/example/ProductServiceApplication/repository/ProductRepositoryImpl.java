@@ -60,12 +60,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public void deleteProduct(UUID uuid) throws ErrorResponseException {
-        if (productIsPresent(uuid)) {
-            productEntityJpaRepository.deleteById(uuid);
-        } else {
+        if (!productIsPresent(uuid)) {
             trackError(uuid);
             throw new ErrorResponseException();
         }
+        productEntityJpaRepository.deleteById(uuid);
     }
 
     private void trackError(UUID uuid) {
