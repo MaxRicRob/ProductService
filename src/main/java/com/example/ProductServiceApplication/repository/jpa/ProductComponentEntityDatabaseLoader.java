@@ -1,7 +1,5 @@
 package com.example.ProductServiceApplication.repository.jpa;
 
-import com.example.ProductServiceApplication.domain.entity.DefaultProductEntity;
-import com.example.ProductServiceApplication.domain.entity.ProductComponentEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

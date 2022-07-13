@@ -1,8 +1,8 @@
 package com.example.ProductServiceApplication.repository;
 
-import com.example.ProductServiceApplication.api.error.ErrorResponseException;
+import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.entity.Product;
-import com.example.ProductServiceApplication.domain.entity.ProductEntity;
+import com.example.ProductServiceApplication.repository.jpa.ProductEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<Product> findProductByUserName(String userName) {
 
-        return productEntityJpaRepository.findAll().stream()
+        return productEntityJpaRepository
+                .findAll()
+                .stream()
                 .filter(productEntity -> productEntity.getUserName().equals(userName))
                 .map(Product::from)
                 .collect(Collectors.toList());

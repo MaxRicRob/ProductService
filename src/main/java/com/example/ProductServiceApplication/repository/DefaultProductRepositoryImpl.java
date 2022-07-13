@@ -21,7 +21,9 @@ public class DefaultProductRepositoryImpl implements DefaultProductRepository {
     @Override
     public List<DefaultProduct> findAll() {
         log.info("get default products from repo without cache");
-        return defaultProductEntityJpaRepository.findAll().stream()
+        return defaultProductEntityJpaRepository
+                .findAll()
+                .stream()
                 .map(DefaultProduct::from)
                 .collect(Collectors.toList());
     }

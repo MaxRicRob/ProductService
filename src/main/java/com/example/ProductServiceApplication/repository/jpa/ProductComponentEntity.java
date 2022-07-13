@@ -1,5 +1,6 @@
-package com.example.ProductServiceApplication.domain.entity;
+package com.example.ProductServiceApplication.repository.jpa;
 
+import com.example.ProductServiceApplication.domain.entity.ProductComponent;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

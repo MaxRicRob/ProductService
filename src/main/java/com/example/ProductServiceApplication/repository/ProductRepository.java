@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.repository;
 
-import com.example.ProductServiceApplication.api.error.ErrorResponseException;
+import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.entity.Product;
 
 import java.util.List;

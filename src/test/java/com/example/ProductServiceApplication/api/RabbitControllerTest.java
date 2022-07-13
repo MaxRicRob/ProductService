@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.api;
 
-import com.example.ProductServiceApplication.api.error.ErrorResponseException;
+import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.ProductService;
 import com.example.ProductServiceApplication.domain.entity.Product;
 import com.google.gson.Gson;

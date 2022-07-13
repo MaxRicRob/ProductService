@@ -1,5 +1,6 @@
-package com.example.ProductServiceApplication.domain.entity;
+package com.example.ProductServiceApplication.repository.jpa;
 
+import com.example.ProductServiceApplication.domain.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,7 +45,9 @@ public class ProductEntity {
     }
 
     private static List<ProductComponentEntity> getProductComponentEntities(Product product) {
-        return product.getComponents().stream()
+        return product
+                .getComponents()
+                .stream()
                 .map(ProductComponentEntity::from)
                 .collect(Collectors.toList());
     }

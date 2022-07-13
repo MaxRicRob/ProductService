@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.domain;
 
-import com.example.ProductServiceApplication.api.error.ErrorResponseException;
+import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.repository.DefaultProductRepository;
 import com.example.ProductServiceApplication.repository.ProductComponentRepository;

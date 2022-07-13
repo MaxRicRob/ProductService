@@ -2,10 +2,9 @@ package com.example.ProductServiceApplication.configuration;
 
 
 import com.example.ProductServiceApplication.api.RabbitController;
-import com.example.ProductServiceApplication.api.error.ErrorResponseException;
+import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.PriceService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
