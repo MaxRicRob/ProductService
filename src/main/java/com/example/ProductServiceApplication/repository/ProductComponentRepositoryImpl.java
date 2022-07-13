@@ -17,7 +17,7 @@ public class ProductComponentRepositoryImpl implements ProductComponentRepositor
 
     private final ProductComponentEntityJpaRepository productComponentEntityJpaRepository;
 
-    @Cacheable(value="productComponentCache")
+    @Cacheable(value = "productComponentCache")
     @Override
     public List<ProductComponent> findAll() {
         log.info("get components from repo without cache");

@@ -1,8 +1,8 @@
 package com.example.ProductServiceApplication.api;
 
-import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.example.ProductServiceApplication.domain.ProductService;
 import com.example.ProductServiceApplication.domain.entity.Product;
+import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,12 @@ import org.springframework.amqp.core.MessageProperties;
 
 import java.util.UUID;
 
-import static com.example.ProductServiceApplication.domain.MessageType.*;
+import static com.example.ProductServiceApplication.domain.MessageType.CREATE_PRODUCT;
+import static com.example.ProductServiceApplication.domain.MessageType.DELETE_PRODUCT;
+import static com.example.ProductServiceApplication.domain.MessageType.GET_COMPONENTS;
+import static com.example.ProductServiceApplication.domain.MessageType.GET_DEFAULT_PRODUCTS;
+import static com.example.ProductServiceApplication.domain.MessageType.GET_PRODUCTS_FROM_USER;
+import static com.example.ProductServiceApplication.domain.MessageType.UPDATE_PRODUCT;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -27,13 +32,10 @@ class RabbitControllerTest {
 
     @InjectMocks
     private RabbitController rabbitController;
-
     @Mock
     private ProductService productService;
-
     @Mock
     private Message message;
-
     @Mock
     private MessageProperties messageProperties;
 

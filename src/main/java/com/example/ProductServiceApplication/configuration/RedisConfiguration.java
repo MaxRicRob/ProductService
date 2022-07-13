@@ -7,7 +7,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 
 import java.time.Duration;
 
-import static org.springframework.data.redis.serializer.RedisSerializationContext.*;
+import static org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 
 @Configuration
 public class RedisConfiguration {
