@@ -43,19 +43,19 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void updateProduct(Product product) throws ErrorResponseException {
 
-        var updatedProduct = ProductEntity.from(product);
-
-        if (productIsPresent(product)) {
-            productEntityJpaRepository.findById(product.getId())
-                    .map(productToUpdate -> {
-                        productToUpdate.setComponents(updatedProduct.getComponents());
-                        productToUpdate.setName(updatedProduct.getName());
-                        productToUpdate.setUserName(updatedProduct.getUserName());
-                        return this.productEntityJpaRepository.save(productToUpdate);
-                    });
+        if (!productIsPresent(product)) {
+            trackError(product.getId());
+            throw new ErrorResponseException();
         }
-        trackError(product.getId());
-        throw new ErrorResponseException();
+
+        var updatedProduct = ProductEntity.from(product);
+        productEntityJpaRepository.findById(product.getId())
+                .map(productToUpdate -> {
+                    productToUpdate.setComponents(updatedProduct.getComponents());
+                    productToUpdate.setName(updatedProduct.getName());
+                    productToUpdate.setUserName(updatedProduct.getUserName());
+                    return this.productEntityJpaRepository.save(productToUpdate);
+                });
     }
 
     @Override
