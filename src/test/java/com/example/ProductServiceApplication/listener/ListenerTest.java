@@ -28,10 +28,10 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class RabbitListenerTest {
+class ListenerTest {
 
     @InjectMocks
-    private RabbitListener rabbitListener;
+    private Listener listener;
     @Mock
     private ProductService productService;
     @Mock
@@ -48,7 +48,7 @@ class RabbitListenerTest {
     void handle_request_get_components() {
         when(messageProperties.getType()).thenReturn(GET_COMPONENTS.name());
 
-        rabbitListener.handleRequest(message);
+        listener.handleRequest(message);
 
         verify(productService).getAllProductComponents();
     }
@@ -57,7 +57,7 @@ class RabbitListenerTest {
     void handle_request_get_default_products() {
         when(messageProperties.getType()).thenReturn(GET_DEFAULT_PRODUCTS.name());
 
-        rabbitListener.handleRequest(message);
+        listener.handleRequest(message);
 
         verify(productService).getAllDefaultProducts();
     }
@@ -67,7 +67,7 @@ class RabbitListenerTest {
         when(messageProperties.getType()).thenReturn(GET_PRODUCTS_FROM_USER.name());
         when(message.getBody()).thenReturn(new Gson().toJson("testUser").getBytes());
 
-        rabbitListener.handleRequest(message);
+        listener.handleRequest(message);
 
         verify(productService).getAllProductsFromUser(any());
     }
@@ -78,7 +78,7 @@ class RabbitListenerTest {
         when(message.getBody()).thenReturn(UUID.randomUUID().toString().getBytes());
 
 
-        rabbitListener.handleRequest(message);
+        listener.handleRequest(message);
 
         try {
             verify(productService).deleteProduct(any());
@@ -93,7 +93,7 @@ class RabbitListenerTest {
         when(message.getBody()).thenReturn(new Gson().toJson(new Product()).getBytes());
 
 
-        rabbitListener.handleRequest(message);
+        listener.handleRequest(message);
 
         try {
             verify(productService).createProduct(any());
@@ -108,7 +108,7 @@ class RabbitListenerTest {
         when(message.getBody()).thenReturn(new Gson().toJson(new Product()).getBytes());
 
 
-        rabbitListener.handleRequest(message);
+        listener.handleRequest(message);
 
         try {
             verify(productService).updateProduct(any());
@@ -121,7 +121,7 @@ class RabbitListenerTest {
     void handle_request_invalid_type() {
         when(messageProperties.getType()).thenReturn("invalid type");
 
-        rabbitListener.handleRequest(message);
+        listener.handleRequest(message);
 
         verifyNoInteractions(productService);
     }

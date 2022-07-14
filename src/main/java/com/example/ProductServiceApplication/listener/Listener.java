@@ -7,6 +7,7 @@ import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.StandardCharsets;
@@ -14,12 +15,12 @@ import java.util.UUID;
 
 
 @Slf4j
-public class RabbitListener {
+public class Listener {
 
     @Autowired
     private ProductService productService;
 
-    @org.springframework.amqp.rabbit.annotation.RabbitListener(queues = "${queue-names.product-service}")
+    @RabbitListener(queues = "${queue-names.product-service}")
     public String handleRequest(Message message) {
 
         final MessageType messageType;
@@ -101,7 +102,7 @@ public class RabbitListener {
 
     private String deleteProductById(UUID uuid) throws ErrorResponseException {
         productService.deleteProduct(uuid);
-        return new Gson().toJson(new Product());
+        return "deleted";
     }
 
     private String getAllUserProducts(String userName) {
