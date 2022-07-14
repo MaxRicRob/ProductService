@@ -1,7 +1,7 @@
 package com.example.ProductServiceApplication.configuration;
 
 
-import com.example.ProductServiceApplication.api.RabbitController;
+import com.example.ProductServiceApplication.listener.RabbitListener;
 import com.example.ProductServiceApplication.domain.PriceService;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +37,8 @@ public class RabbitConfiguration {
 
 
     @Bean
-    public RabbitController rabbitController() {
-        return new RabbitController();
+    public RabbitListener rabbitController() {
+        return new RabbitListener();
     }
 
     @Bean

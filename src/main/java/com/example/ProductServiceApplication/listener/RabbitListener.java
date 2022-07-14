@@ -1,4 +1,4 @@
-package com.example.ProductServiceApplication.api;
+package com.example.ProductServiceApplication.listener;
 
 import com.example.ProductServiceApplication.domain.MessageType;
 import com.example.ProductServiceApplication.domain.ProductService;
@@ -7,7 +7,6 @@ import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.StandardCharsets;
@@ -15,12 +14,12 @@ import java.util.UUID;
 
 
 @Slf4j
-public class RabbitController {
+public class RabbitListener {
 
     @Autowired
     private ProductService productService;
 
-    @RabbitListener(queues = "${queue-names.product-service}")
+    @org.springframework.amqp.rabbit.annotation.RabbitListener(queues = "${queue-names.product-service}")
     public String handleRequest(Message message) {
 
         final MessageType messageType;
