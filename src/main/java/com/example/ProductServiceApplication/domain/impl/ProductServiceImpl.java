@@ -111,17 +111,17 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductComponentEntity toProductComponentEntity(ProductComponent productComponent) {
 
-            return new ProductComponentEntity()
-                    .setId(productComponent.getId())
-                    .setName(productComponent.getName())
-                    .setPrice(productComponent.getPrice())
-                    .setWeight(productComponent.getWeight())
-                    .setColor(productComponent.getColor())
-                    .setOrigin(productComponent.getOrigin())
-                    .setAwesomeness(productComponent.getAwesomeness())
-                    .setFarmer(productComponent.getFarmer())
-                    .setOrganic(productComponent.isOrganic())
-                    .setCalories(productComponent.getCalories());
+        return new ProductComponentEntity()
+                .setId(productComponent.getId())
+                .setName(productComponent.getName())
+                .setPrice(productComponent.getPrice())
+                .setWeight(productComponent.getWeight())
+                .setColor(productComponent.getColor())
+                .setOrigin(productComponent.getOrigin())
+                .setAwesomeness(productComponent.getAwesomeness())
+                .setFarmer(productComponent.getFarmer())
+                .setOrganic(productComponent.isOrganic())
+                .setCalories(productComponent.getCalories());
 
     }
 }

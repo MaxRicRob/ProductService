@@ -1,7 +1,7 @@
 package com.example.ProductServiceApplication.listener;
 
-import com.example.ProductServiceApplication.domain.entity.MessageType;
 import com.example.ProductServiceApplication.domain.ProductService;
+import com.example.ProductServiceApplication.domain.entity.MessageType;
 import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.google.gson.Gson;
