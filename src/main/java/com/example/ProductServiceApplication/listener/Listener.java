@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.listener;
 
-import com.example.ProductServiceApplication.domain.MessageType;
+import com.example.ProductServiceApplication.domain.entity.MessageType;
 import com.example.ProductServiceApplication.domain.ProductService;
 import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
@@ -92,8 +92,7 @@ public class Listener {
     }
 
     private String updateProduct(Product product) throws ErrorResponseException {
-        productService.updateProduct(product);
-        return new Gson().toJson(product);
+        return new Gson().toJson(productService.updateProduct(product));
     }
 
     private String createProduct(Product product) throws ErrorResponseException {

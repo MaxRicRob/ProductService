@@ -1,8 +1,8 @@
-package com.example.ProductServiceApplication.repository;
+package com.example.ProductServiceApplication.repository.impl;
 
-import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
-import com.example.ProductServiceApplication.repository.jpa.ProductEntity;
+import com.example.ProductServiceApplication.repository.ProductRepository;
+import com.example.ProductServiceApplication.repository.entity.ProductEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,47 +20,44 @@ public class ProductRepositoryImpl implements ProductRepository {
     private final ProductEntityJpaRepository productEntityJpaRepository;
 
     @Override
-    public List<Product> findProductByUserName(String userName) {
+    public List<ProductEntity> findProductByUserName(String userName) {
 
         return productEntityJpaRepository
                 .findAll()
                 .stream()
                 .filter(productEntity -> productEntity.getUserName().equals(userName))
-                .map(Product::from)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Product createProduct(Product product) throws ErrorResponseException {
+    public void createProduct(ProductEntity productEntity) throws ErrorResponseException {
 
-        if (productIsPresent(product)) {
-            log.error("product with id: {} already exists in database", product.getId());
+        if (productEntityIsPresent(productEntity)) {
+            log.error("productEntity with id: {} already exists in database", productEntity.getId());
             throw new ErrorResponseException();
         }
-        return Product.from(productEntityJpaRepository.save(ProductEntity.from(product)));
+        productEntityJpaRepository.save(productEntity);
     }
 
     @Override
-    public void updateProduct(Product product) throws ErrorResponseException {
+    public void updateProduct(ProductEntity productEntity) throws ErrorResponseException {
 
-        if (!productIsPresent(product)) {
-            trackError(product.getId());
+        if (!productEntityIsPresent(productEntity)) {
+            trackError(productEntity.getId());
             throw new ErrorResponseException();
         }
-
-        var updatedProduct = ProductEntity.from(product);
-        productEntityJpaRepository.findById(product.getId())
+        productEntityJpaRepository.findById(productEntity.getId())
                 .map(productToUpdate -> {
-                    productToUpdate.setComponents(updatedProduct.getComponents());
-                    productToUpdate.setName(updatedProduct.getName());
-                    productToUpdate.setUserName(updatedProduct.getUserName());
+                    productToUpdate.setComponents(productEntity.getComponents());
+                    productToUpdate.setName(productEntity.getName());
+                    productToUpdate.setUserName(productEntity.getUserName());
                     return this.productEntityJpaRepository.save(productToUpdate);
                 });
     }
 
     @Override
     public void deleteProduct(UUID uuid) throws ErrorResponseException {
-        if (!productIsPresent(uuid)) {
+        if (!productEntityIsPresent(uuid)) {
             trackError(uuid);
             throw new ErrorResponseException();
         }
@@ -71,11 +68,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         log.error("can't find product with id: {} in database", uuid);
     }
 
-    private boolean productIsPresent(UUID uuid) {
+    private boolean productEntityIsPresent(UUID uuid) {
         return productEntityJpaRepository.findById(uuid).isPresent();
     }
 
-    private boolean productIsPresent(Product product) {
+    private boolean productEntityIsPresent(ProductEntity product) {
         return productEntityJpaRepository.findById(product.getId()).isPresent();
     }
 }

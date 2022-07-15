@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.listener;
 
-import com.example.ProductServiceApplication.domain.ProductService;
+import com.example.ProductServiceApplication.domain.impl.ProductServiceImpl;
 import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.google.gson.Gson;
@@ -15,12 +15,12 @@ import org.springframework.amqp.core.MessageProperties;
 
 import java.util.UUID;
 
-import static com.example.ProductServiceApplication.domain.MessageType.CREATE_PRODUCT;
-import static com.example.ProductServiceApplication.domain.MessageType.DELETE_PRODUCT;
-import static com.example.ProductServiceApplication.domain.MessageType.GET_COMPONENTS;
-import static com.example.ProductServiceApplication.domain.MessageType.GET_DEFAULT_PRODUCTS;
-import static com.example.ProductServiceApplication.domain.MessageType.GET_PRODUCTS_FROM_USER;
-import static com.example.ProductServiceApplication.domain.MessageType.UPDATE_PRODUCT;
+import static com.example.ProductServiceApplication.domain.entity.MessageType.CREATE_PRODUCT;
+import static com.example.ProductServiceApplication.domain.entity.MessageType.DELETE_PRODUCT;
+import static com.example.ProductServiceApplication.domain.entity.MessageType.GET_COMPONENTS;
+import static com.example.ProductServiceApplication.domain.entity.MessageType.GET_DEFAULT_PRODUCTS;
+import static com.example.ProductServiceApplication.domain.entity.MessageType.GET_PRODUCTS_FROM_USER;
+import static com.example.ProductServiceApplication.domain.entity.MessageType.UPDATE_PRODUCT;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -33,7 +33,7 @@ class ListenerTest {
     @InjectMocks
     private Listener listener;
     @Mock
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
     @Mock
     private Message message;
     @Mock
@@ -50,7 +50,7 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verify(productService).getAllProductComponents();
+        verify(productServiceImpl).getAllProductComponents();
     }
 
     @Test
@@ -59,7 +59,7 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verify(productService).getAllDefaultProducts();
+        verify(productServiceImpl).getAllDefaultProducts();
     }
 
     @Test
@@ -69,7 +69,7 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verify(productService).getAllProductsFromUser(any());
+        verify(productServiceImpl).getAllProductsFromUser(any());
     }
 
     @Test
@@ -81,7 +81,7 @@ class ListenerTest {
         listener.handleRequest(message);
 
         try {
-            verify(productService).deleteProduct(any());
+            verify(productServiceImpl).deleteProduct(any());
         } catch (ErrorResponseException e) {
             fail();
         }
@@ -96,7 +96,7 @@ class ListenerTest {
         listener.handleRequest(message);
 
         try {
-            verify(productService).createProduct(any());
+            verify(productServiceImpl).createProduct(any());
         } catch (ErrorResponseException e) {
             fail();
         }
@@ -111,7 +111,7 @@ class ListenerTest {
         listener.handleRequest(message);
 
         try {
-            verify(productService).updateProduct(any());
+            verify(productServiceImpl).updateProduct(any());
         } catch (ErrorResponseException e) {
             fail();
         }
@@ -123,6 +123,6 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verifyNoInteractions(productService);
+        verifyNoInteractions(productServiceImpl);
     }
 }

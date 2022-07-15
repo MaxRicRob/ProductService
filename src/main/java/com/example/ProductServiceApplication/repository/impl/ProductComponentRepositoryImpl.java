@@ -1,6 +1,7 @@
-package com.example.ProductServiceApplication.repository;
+package com.example.ProductServiceApplication.repository.impl;
 
-import com.example.ProductServiceApplication.domain.entity.ProductComponent;
+import com.example.ProductServiceApplication.repository.ProductComponentRepository;
+import com.example.ProductServiceApplication.repository.entity.ProductComponentEntity;
 import com.example.ProductServiceApplication.repository.jpa.ProductComponentEntityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Repository
@@ -19,13 +19,9 @@ public class ProductComponentRepositoryImpl implements ProductComponentRepositor
 
     @Cacheable(value = "productComponentCache")
     @Override
-    public List<ProductComponent> findAll() {
+    public List<ProductComponentEntity> findAll() {
         log.info("get components from repo without cache");
 
-        return productComponentEntityJpaRepository
-                .findAll()
-                .stream()
-                .map(ProductComponent::from)
-                .collect(Collectors.toList());
+        return productComponentEntityJpaRepository.findAll();
     }
 }

@@ -1,6 +1,5 @@
-package com.example.ProductServiceApplication.repository.jpa;
+package com.example.ProductServiceApplication.repository.entity;
 
-import com.example.ProductServiceApplication.domain.entity.ProductComponent;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,20 +41,5 @@ public class ProductComponentEntity {
     private boolean organic;
     @Column(nullable = false)
     private int calories;
-
-    public static ProductComponentEntity from(ProductComponent productComponent) {
-
-        return new ProductComponentEntity()
-                .setId(productComponent.getId())
-                .setName(productComponent.getName())
-                .setPrice(productComponent.getPrice())
-                .setWeight(productComponent.getWeight())
-                .setColor(productComponent.getColor())
-                .setOrigin(productComponent.getOrigin())
-                .setAwesomeness(productComponent.getAwesomeness())
-                .setFarmer(productComponent.getFarmer())
-                .setOrganic(productComponent.isOrganic())
-                .setCalories(productComponent.getCalories());
-    }
 
 }
