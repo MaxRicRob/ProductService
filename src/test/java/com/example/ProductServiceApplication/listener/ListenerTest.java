@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.listener;
 
-import com.example.ProductServiceApplication.domain.impl.ProductServiceImpl;
+import com.example.ProductServiceApplication.domain.ProductService;
 import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.google.gson.Gson;
@@ -33,7 +33,7 @@ class ListenerTest {
     @InjectMocks
     private Listener listener;
     @Mock
-    private ProductServiceImpl productServiceImpl;
+    private ProductService productService;
     @Mock
     private Message message;
     @Mock
@@ -50,7 +50,7 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verify(productServiceImpl).getAllProductComponents();
+        verify(productService).getAllProductComponents();
     }
 
     @Test
@@ -59,7 +59,7 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verify(productServiceImpl).getAllDefaultProducts();
+        verify(productService).getAllDefaultProducts();
     }
 
     @Test
@@ -69,7 +69,7 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verify(productServiceImpl).getAllProductsFromUser(any());
+        verify(productService).getAllProductsFromUser(any());
     }
 
     @Test
@@ -81,7 +81,7 @@ class ListenerTest {
         listener.handleRequest(message);
 
         try {
-            verify(productServiceImpl).deleteProduct(any());
+            verify(productService).deleteProduct(any());
         } catch (ErrorResponseException e) {
             fail();
         }
@@ -96,7 +96,7 @@ class ListenerTest {
         listener.handleRequest(message);
 
         try {
-            verify(productServiceImpl).createProduct(any());
+            verify(productService).createProduct(any());
         } catch (ErrorResponseException e) {
             fail();
         }
@@ -111,7 +111,7 @@ class ListenerTest {
         listener.handleRequest(message);
 
         try {
-            verify(productServiceImpl).updateProduct(any());
+            verify(productService).updateProduct(any());
         } catch (ErrorResponseException e) {
             fail();
         }
@@ -123,6 +123,6 @@ class ListenerTest {
 
         listener.handleRequest(message);
 
-        verifyNoInteractions(productServiceImpl);
+        verifyNoInteractions(productService);
     }
 }
