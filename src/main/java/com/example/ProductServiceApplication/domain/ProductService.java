@@ -1,8 +1,8 @@
 package com.example.ProductServiceApplication.domain;
 
-import com.example.ProductServiceApplication.domain.entity.DefaultProduct;
-import com.example.ProductServiceApplication.domain.entity.Product;
-import com.example.ProductServiceApplication.domain.entity.ProductComponent;
+import com.example.ProductServiceApplication.entity.DefaultProduct;
+import com.example.ProductServiceApplication.entity.Product;
+import com.example.ProductServiceApplication.entity.ProductComponent;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
 
 import java.util.List;

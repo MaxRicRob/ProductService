@@ -1,8 +1,8 @@
 package com.example.ProductServiceApplication.domain.impl;
 
 import com.example.ProductServiceApplication.domain.PriceService;
-import com.example.ProductServiceApplication.domain.entity.PriceRequest;
-import com.example.ProductServiceApplication.domain.entity.PriceResponse;
+import com.example.ProductServiceApplication.entity.PriceRequest;
+import com.example.ProductServiceApplication.entity.PriceResponse;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.example.ProductServiceApplication.domain.entity.MessageType.PRICE_REQUEST;
+import static com.example.ProductServiceApplication.entity.MessageType.PRICE_REQUEST;
 
 
 @RequiredArgsConstructor

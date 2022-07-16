@@ -1,4 +1,4 @@
-package com.example.ProductServiceApplication.domain.entity;
+package com.example.ProductServiceApplication.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,16 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class PriceRequest {
+public class PriceResponse {
 
-    private List<Long> prices;
+    private long totalPrice;
 
 }

@@ -1,7 +1,7 @@
 package com.example.ProductServiceApplication.listener;
 
 import com.example.ProductServiceApplication.domain.ProductService;
-import com.example.ProductServiceApplication.domain.entity.Product;
+import com.example.ProductServiceApplication.entity.Product;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,12 +15,12 @@ import org.springframework.amqp.core.MessageProperties;
 
 import java.util.UUID;
 
-import static com.example.ProductServiceApplication.domain.entity.MessageType.CREATE_PRODUCT;
-import static com.example.ProductServiceApplication.domain.entity.MessageType.DELETE_PRODUCT;
-import static com.example.ProductServiceApplication.domain.entity.MessageType.GET_COMPONENTS;
-import static com.example.ProductServiceApplication.domain.entity.MessageType.GET_DEFAULT_PRODUCTS;
-import static com.example.ProductServiceApplication.domain.entity.MessageType.GET_PRODUCTS_FROM_USER;
-import static com.example.ProductServiceApplication.domain.entity.MessageType.UPDATE_PRODUCT;
+import static com.example.ProductServiceApplication.entity.MessageType.CREATE_PRODUCT;
+import static com.example.ProductServiceApplication.entity.MessageType.DELETE_PRODUCT;
+import static com.example.ProductServiceApplication.entity.MessageType.GET_COMPONENTS;
+import static com.example.ProductServiceApplication.entity.MessageType.GET_DEFAULT_PRODUCTS;
+import static com.example.ProductServiceApplication.entity.MessageType.GET_PRODUCTS_FROM_USER;
+import static com.example.ProductServiceApplication.entity.MessageType.UPDATE_PRODUCT;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

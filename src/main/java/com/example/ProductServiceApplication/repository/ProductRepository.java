@@ -1,7 +1,7 @@
 package com.example.ProductServiceApplication.repository;
 
+import com.example.ProductServiceApplication.entity.ProductEntity;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
-import com.example.ProductServiceApplication.repository.entity.ProductEntity;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.repository.impl;
 
-import com.example.ProductServiceApplication.domain.entity.ProductComponent;
+import com.example.ProductServiceApplication.entity.ProductComponent;
 import com.example.ProductServiceApplication.repository.ProductComponentRepository;
 import com.example.ProductServiceApplication.repository.jpa.ProductComponentEntityJpaRepository;
 import lombok.RequiredArgsConstructor;

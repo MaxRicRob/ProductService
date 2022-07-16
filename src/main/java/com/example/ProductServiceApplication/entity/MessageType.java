@@ -1,4 +1,4 @@
-package com.example.ProductServiceApplication.domain.entity;
+package com.example.ProductServiceApplication.entity;
 
 public enum MessageType {
 

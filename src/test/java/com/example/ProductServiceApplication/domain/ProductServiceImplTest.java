@@ -1,12 +1,12 @@
 package com.example.ProductServiceApplication.domain;
 
-import com.example.ProductServiceApplication.domain.entity.Product;
 import com.example.ProductServiceApplication.domain.impl.ProductServiceImpl;
+import com.example.ProductServiceApplication.entity.Product;
+import com.example.ProductServiceApplication.entity.ProductEntity;
 import com.example.ProductServiceApplication.error.ErrorResponseException;
 import com.example.ProductServiceApplication.repository.DefaultProductRepository;
 import com.example.ProductServiceApplication.repository.ProductComponentRepository;
 import com.example.ProductServiceApplication.repository.ProductRepository;
-import com.example.ProductServiceApplication.repository.entity.ProductEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

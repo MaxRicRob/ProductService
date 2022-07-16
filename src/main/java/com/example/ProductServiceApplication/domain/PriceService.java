@@ -1,7 +1,7 @@
 package com.example.ProductServiceApplication.domain;
 
-import com.example.ProductServiceApplication.domain.entity.PriceRequest;
-import com.example.ProductServiceApplication.domain.entity.PriceResponse;
+import com.example.ProductServiceApplication.entity.PriceRequest;
+import com.example.ProductServiceApplication.entity.PriceResponse;
 
 public interface PriceService {
 

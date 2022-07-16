@@ -1,6 +1,5 @@
-package com.example.ProductServiceApplication.domain.entity;
+package com.example.ProductServiceApplication.entity;
 
-import com.example.ProductServiceApplication.repository.entity.DefaultProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

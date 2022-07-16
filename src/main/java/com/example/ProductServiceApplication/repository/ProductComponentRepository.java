@@ -1,6 +1,6 @@
 package com.example.ProductServiceApplication.repository;
 
-import com.example.ProductServiceApplication.domain.entity.ProductComponent;
+import com.example.ProductServiceApplication.entity.ProductComponent;
 
 import java.util.List;
 
