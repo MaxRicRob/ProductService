@@ -1,12 +1,12 @@
 package com.example.ProductServiceApplication.repository;
 
 
-import com.example.ProductServiceApplication.repository.entity.DefaultProductEntity;
+import com.example.ProductServiceApplication.domain.entity.DefaultProduct;
 
 import java.util.List;
 
 public interface DefaultProductRepository {
 
-    List<DefaultProductEntity> findAll();
+    List<DefaultProduct> findAll();
 
 }

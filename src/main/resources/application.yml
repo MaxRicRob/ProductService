@@ -23,9 +23,7 @@ spring:
   rabbitmq:
     host: rabbitmq
     port: 5672
-  redis:
-    host: redis
-    port: 6379
+
 
 
 

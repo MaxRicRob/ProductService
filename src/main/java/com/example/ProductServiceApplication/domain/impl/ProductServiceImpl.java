@@ -14,6 +14,7 @@ import com.example.ProductServiceApplication.repository.ProductRepository;
 import com.example.ProductServiceApplication.repository.entity.ProductComponentEntity;
 import com.example.ProductServiceApplication.repository.entity.ProductEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -32,20 +34,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductComponent> getAllProductComponents() {
-        return productComponentRepository
-                .findAll()
-                .stream()
-                .map(ProductComponent::from)
-                .collect(Collectors.toList());
+        return productComponentRepository.findAll();
+
     }
 
     @Override
     public List<DefaultProduct> getAllDefaultProducts() {
-        return defaultProductRepository
-                .findAll()
-                .stream()
-                .map(DefaultProduct::from)
-                .collect(Collectors.toList());
+        return defaultProductRepository.findAll();
     }
 
     @Override
