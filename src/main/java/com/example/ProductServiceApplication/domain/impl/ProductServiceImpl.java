@@ -32,20 +32,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductComponent> getAllProductComponents() {
-        return productComponentRepository
-                .findAll()
-                .stream()
-                .map(ProductComponent::from)
-                .collect(Collectors.toList());
+        return productComponentRepository.findAll();
+
     }
 
     @Override
     public List<DefaultProduct> getAllDefaultProducts() {
-        return defaultProductRepository
-                .findAll()
-                .stream()
-                .map(DefaultProduct::from)
-                .collect(Collectors.toList());
+        return defaultProductRepository.findAll();
     }
 
     @Override

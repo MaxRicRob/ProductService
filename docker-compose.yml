@@ -3,8 +3,6 @@ services:
   mysqlDb:
     image: mysql:latest
     restart: unless-stopped
-    cap_add:
-      - SYS_NICE
     ports:
       - 3307:3306
     environment:
@@ -36,7 +34,7 @@ services:
     expose:
       - 8082
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDb:3306/product_db?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDb:3306/product_db?autoReconnect=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=pw
     volumes:
