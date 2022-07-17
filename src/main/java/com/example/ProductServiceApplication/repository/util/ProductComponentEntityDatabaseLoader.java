@@ -49,13 +49,14 @@ public class ProductComponentEntityDatabaseLoader {
 
     private List<ProductComponentEntity> getProductComponentEntitiesFromWarehouse() {
 
+        log.info("call Warehouse for Components");
+
         Mono<List<ProductComponentEntity>> response = webClient
                 .get()
                 .uri("components")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<>() {
-                });
+                .bodyToMono(new ParameterizedTypeReference<>() {});
 
         log.info("Product Components received from Warehouse");
 
@@ -63,13 +64,15 @@ public class ProductComponentEntityDatabaseLoader {
     }
 
     private List<DefaultProductEntity> getDefaultProductEntitiesFromWarehouse() {
+
+        log.info("call Warehouse for default products");
+
         Mono<List<DefaultProductEntity>> response = webClient
                 .get()
                 .uri("defaultProducts")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<>() {
-                });
+                .bodyToMono(new ParameterizedTypeReference<>() {});
 
         log.info("Default Product received from Warehouse");
 
