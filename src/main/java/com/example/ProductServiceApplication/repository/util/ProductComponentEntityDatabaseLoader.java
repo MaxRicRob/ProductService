@@ -9,7 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class ProductComponentEntityDatabaseLoader {
 
     private final WebClient webClient = WebClient.create("http://WarehouseApp:8081");
+
 
     @Bean
     CommandLineRunner initDatabase(ProductComponentEntityJpaRepository productComponentEntityJpaRepository,
@@ -45,32 +49,31 @@ public class ProductComponentEntityDatabaseLoader {
 
     private List<ProductComponentEntity> getProductComponentEntitiesFromWarehouse() {
 
-        var productComponentFlux = webClient
+        Mono<List<ProductComponentEntity>> response = webClient
                 .get()
                 .uri("components")
+                .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(ProductComponentEntity.class);
+                .bodyToMono(new ParameterizedTypeReference<>() {
+                });
 
-        productComponentFlux.subscribe();
         log.info("Product Components received from Warehouse");
 
-        return productComponentFlux
-                .toStream()
-                .collect(Collectors.toList());
+        return response.block();
     }
 
     private List<DefaultProductEntity> getDefaultProductEntitiesFromWarehouse() {
-        var defaultProductFlux = webClient
+        Mono<List<DefaultProductEntity>> response = webClient
                 .get()
                 .uri("defaultProducts")
+                .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(DefaultProductEntity.class);
-        defaultProductFlux.subscribe();
+                .bodyToMono(new ParameterizedTypeReference<>() {
+                });
+
         log.info("Default Product received from Warehouse");
 
-        return defaultProductFlux
-                .toStream()
-                .collect(Collectors.toList());
+        return response.block();
     }
 
 
