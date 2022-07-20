@@ -3,6 +3,7 @@ package com.example.ProductServiceApplication.domain.impl;
 
 import com.example.ProductServiceApplication.domain.PriceService;
 import com.example.ProductServiceApplication.domain.ProductService;
+import com.example.ProductServiceApplication.domain.util.ExternalApi;
 import com.example.ProductServiceApplication.entity.DefaultProduct;
 import com.example.ProductServiceApplication.entity.PriceRequest;
 import com.example.ProductServiceApplication.entity.Product;
@@ -58,7 +59,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(Product product) throws ErrorResponseException {
-        product.setId(UUID.randomUUID());
+
+        product.setId(ExternalApi.getRandomUUID());
         productRepository.createProduct(toProductEntity(product));
         return product;
     }
